@@ -3,9 +3,9 @@
 ##To Do List
 
 <ul>
-<li> Add angular
-<li> Change screen based on Authorization
-<li> Show today and tomorrow by hours
+<li> ~~Add angular~~ 2/25/17
+<li> ~~Change screen based on Authorization~~ 2/26/17
+<li> Setup UI to show today by hours
 <li> Add yearly, monthly goals
 <li> Revisit Objective
 </ul>
@@ -13,6 +13,9 @@
 
 ---
 ##Notes
+
+###2/26/17
+Goal: Change what's shown on the screen based on authorization. Start setting up the UI for Today (hourly) and the Goals.
 
 ###2/25/17
 This is a project to play around with JS, angularjs, but mostly the Google Calendar API. Additionally, I'm planning to use this to maybe track goals outside of journaling using one location, google calendar.

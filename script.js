@@ -41,7 +41,8 @@ app.controller('mainCtrl', function($scope, $window) {
         data: {
           CLIENT_ID: '729784946085-pl50l2td2e4jjoadi0ad06cmesbujbno.apps.googleusercontent.com',
           DISCOVERY_DOCS: ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"],
-          SCOPES: "https://www.googleapis.com/auth/calendar"
+          SCOPES: "https://www.googleapis.com/auth/calendar",
+          signedIn:false
         },
         handleClientLoad:function() {
             gapi.load('client:auth2', $scope.initiatePage.initClient);
@@ -71,6 +72,8 @@ app.controller('mainCtrl', function($scope, $window) {
                 authorizeButton.css("display", "none");
                 signoutButton.css("display", "block");;
                 $scope.initiatePage.listUpcomingEvents();
+                $scope.initiatePage.data.signedIn = true;
+                $scope.$apply();
             } else {
                 authorizeButton.css("display", "block");
                 signoutButton.css("display", "none");
