@@ -1,5 +1,5 @@
 body{
-    background-color: #f4f4f4 !important;
+    background-color: #CAC2B5 !important;
     color: #fff;
     padding: 0;
     margin: 0;
@@ -14,10 +14,19 @@ body{
   margin: 0;
   width:100% !important;
   height:100% !important;
-  background-color:pink
+  background-color:pink;
 }
 
 .container{
     width:100% !important;
     height:100% !important;
+    background-color: purple !important;
+}
+
+.container-fluid{
+  padding: 0;
+  margin: 0;
+  width:100% !important;
+  height:100% !important;
+  background-color: blue !important;
 }

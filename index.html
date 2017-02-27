@@ -27,51 +27,48 @@
   onreadystatechange="if (this.readyState === 'complete') this.onload()">
   </script>
 
-  <script src="script.js?v2" type="text/javascript"></script>
+  <script src="script.js?v3" type="text/javascript"></script>
 </head>
 
 <body ng-controller="mainCtrl">
-    <div class="container-fluid">
-  <div class="page-wrapper">
+  <div class="container-fluid">
+    <div class="page-wrapper">
 
-    <nav class="navbar navbar-inverse" ng-hide="!initiatePage.data.signedIn">
+      <nav class="navbar navbar-inverse" ng-hide="!initiatePage.data.signedIn">
         <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="#">DailyTracker</a>
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">DailyTracker</a>
+          </div>
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#">Link</a></li>
+            <li><a href="#">Link</a></li>
+          </ul>
+          <button class="btn btn-danger navbar-btn">Button</button>
         </div>
-        <ul class="nav navbar-nav">
-          <li class="active"><a href="#">Home</a></li>
-          <li><a href="#">Link</a></li>
-          <li><a href="#">Link</a></li>
-        </ul>
-        <button class="btn btn-danger navbar-btn">Button</button>
-      </div>
-    </nav>
+      </nav>
 
-    <div id="introduction" ng-hide="initiatePage.data.signedIn">
-      <div class="jumbotron">
+      <div id="introduction" ng-hide="initiatePage.data.signedIn">
+        <div class="jumbotron">
 
           <h1>Hello, world!</h1>
           <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
           <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
         </div>
-      </div>
+
       <div class="row">
-        <h1>DailyTracker</h1>
         <button type="button" class="btn btn-primary" id="authorize-button" style="display: none;">Authorize</button>
         <button type="button" class="btn btn-primary" id="signout-button" style="display: none;">Sign Out</button>
-
-        <button type="button" class="btn btn-primary" onclick="addNewItem()">Add Item</button>
-        <pre id="content"></pre>
+      </div>
       </div>
     </div>
-
-    <div id="signedIn" ng-hide="!initiatePage.data.signedIn">
-
-      <div class="heading row">DailyTracker</div>
-    </div>
-</div>
   </div>
+  <div id="signedIn" ng-hide="!initiatePage.data.signedIn">
+  <button type="button" class="btn btn-primary" onclick="addNewItem()">Add Item</button>
+    <pre id="content"></pre>
+  </div>
+</div>
+</div>
 
 </body>
 </html>

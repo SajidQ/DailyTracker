@@ -3,8 +3,8 @@
 ##To Do List
 
 <ul>
-<li> ~~Add angular~~ 2/25/17
-<li> ~~Change screen based on Authorization~~ 2/26/17
+<li> <del>Add angular</del> 2/25/17
+<li> <del>Change screen based on Authorization</del> 2/26/17
 <li> Setup UI to show today by hours
 <li> Add yearly, monthly goals
 <li> Revisit Objective
