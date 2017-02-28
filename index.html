@@ -27,45 +27,65 @@
   onreadystatechange="if (this.readyState === 'complete') this.onload()">
   </script>
 
-  <script src="script.js?v3" type="text/javascript"></script>
+  <script src="script.js?v4" type="text/javascript"></script>
 </head>
 
 <body ng-controller="mainCtrl">
+  <nav class="navbar navbar-inverse" ng-hide="!initiatePage.data.signedIn">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">DailyTracker</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#">Link</a></li>
+        <li><a href="#">Link</a></li>
+      </ul>
+      <button class="btn btn-danger navbar-btn" id="signout-button" style="display: none;">Sign Out</button>
+    </div>
+  </nav>
+
   <div class="container-fluid">
     <div class="page-wrapper">
 
-      <nav class="navbar navbar-inverse" ng-hide="!initiatePage.data.signedIn">
-        <div class="container">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="#">DailyTracker</a>
-          </div>
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#">Link</a></li>
-            <li><a href="#">Link</a></li>
-          </ul>
-          <button class="btn btn-danger navbar-btn">Button</button>
-        </div>
-      </nav>
+
 
       <div id="introduction" ng-hide="initiatePage.data.signedIn">
         <div class="jumbotron">
 
-          <h1>Hello, world!</h1>
-          <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+          <h1>DailyTracker</h1>
+          <p>Welcome! Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in augue porttitor, pretium lacus a, blandit nisl. Phasellus vitae vestibulum dui. Praesent sed leo sit amet nisl pharetra aliquet eget ac est. Mauris eu dui sit amet orci lobortis maximus. Morbi vel tincidunt est, et cursus lacus. Ut nec turpis fermentum mi sodales bibendum. Proin tempor suscipit est vel dignissim. Fusce condimentum nibh lorem, ut tempus velit sodales eu. </p>
           <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
         </div>
 
-      <div class="row">
-        <button type="button" class="btn btn-primary" id="authorize-button" style="display: none;">Authorize</button>
-        <button type="button" class="btn btn-primary" id="signout-button" style="display: none;">Sign Out</button>
-      </div>
+        <div class="row">
+          <div class="col-md-10 col-lg-10">
+            <button type="button" class="btn btn-primary btn-lg btn-block" id="authorize-button" style="display: none;">Authorize</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
   <div id="signedIn" ng-hide="!initiatePage.data.signedIn">
-  <button type="button" class="btn btn-primary" onclick="addNewItem()">Add Item</button>
-    <pre id="content"></pre>
+    <!--<button type="button" class="btn btn-primary" id="signout-button" style="display: none;">Sign Out</button>-->
+    <button type="button" class="btn btn-primary" onclick="addNewItem()">Add Item</button>
+    <!--<pre id="content"></pre>-->
+
+    <div class="col-sm-4 col-md-4 col-lg-4">
+      <div class="panel panel-default" id="today">
+        <div class="panel-heading">
+          <h3 class="panel-title">Panel title</h3>
+        </div>
+        <div class="panel-body">
+          <div>
+            <div class="input-group hours">
+              <input type="text" class=" form-control" placeholder="Recipient's username" aria-describedby="basic-addon2" ng-repeat="halfHour in handleHours.data.hours track by $index">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 </div>
