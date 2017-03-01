@@ -74,13 +74,15 @@
     <div class="col-sm-4 col-md-4 col-lg-4">
       <div class="panel panel-default" id="today">
         <div class="panel-heading">
-          <h3 class="panel-title">Panel title</h3>
+          <h3 class="panel-title">Today</h3>
         </div>
         <div class="panel-body">
           <div>
-            <div class="input-group hours">
-              <input type="text" class=" form-control" placeholder="Recipient's username" aria-describedby="basic-addon2" ng-repeat="halfHour in handleHours.data.hours track by $index">
-
+            <div class="hours">
+              <div ng-repeat="halfHour in handleHours.data.hours track by $index">
+              <div class="label">{{halfHour.hour+":"+halfHour.min}} {{halfHour.am ? "AM":"PM"}}</div>
+              <input class="hourInput" type="text" placeholder="What are you doing? " aria-describedby="basic-addon2" >
+            </div>
             </div>
           </div>
         </div>

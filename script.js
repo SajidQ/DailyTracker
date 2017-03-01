@@ -152,9 +152,34 @@ app.controller('mainCtrl', function($scope, $window) {
     },
     functions:{
       initiateHours:function(){
-        for(var i=0; i<48; i++){
+        //var hour=12;
+        var min = "00";
+        var am = true;
+        for(var i=12; i<48; i++){
+
+          var hour = i;
+          if(i>=24)
+          {
+            am= false;
+            if(i!=24 && i!==25)
+              hour=hour-24;
+          }
+
+          if(i%2!==0)
+          {
+            min="30";
+          }
+          else {
+            min="00";
+          }
+
+
+
           $scope.handleHours.data.hours.push({
             id:i,
+            hour: Math.floor(hour/2),
+            min: min,
+            am: am,
             task:""
           });
         }

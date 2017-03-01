@@ -33,8 +33,28 @@ body{
   width: 200px !important;
 }
 
+.hours{
+
+}
+
+.hours .label{
+  float: left;
+  color: #606060 !important;
+  width: 60px !important;
+  text-align: left;
+  height: 18px !important;
+  vertical-align: middle !important;
+}
+
+.hours.hourInput{
+  float: right;
+}
+
 input{
   border: 0px !important;
   padding: 0px !important;
-  height: 18px !important; 
+  height: 18px !important;
+  font-size:12px !important;
+  border-bottom: 1px solid #C8C8C8 !important;
+  color: #000 !important;
 }
