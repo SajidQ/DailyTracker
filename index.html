@@ -27,11 +27,12 @@
   onreadystatechange="if (this.readyState === 'complete') this.onload()">
   </script>
 
-  <script src="script.js?v4" type="text/javascript"></script>
+  <script src="script.js?v5" type="text/javascript"></script>
+  <script src="mainService.js" type="text/javascript"></script>
 </head>
 
 <body ng-controller="mainCtrl">
-  <nav class="navbar navbar-inverse" ng-hide="!initiatePage.data.signedIn">
+  <nav class="navbar navbar-inverse navbar-static-top" ng-hide="!initiatePage.data.signedIn">
     <div class="container">
       <div class="navbar-header">
         <a class="navbar-brand" href="#">DailyTracker</a>
@@ -69,9 +70,9 @@
   <div id="signedIn" ng-hide="!initiatePage.data.signedIn">
     <!--<button type="button" class="btn btn-primary" id="signout-button" style="display: none;">Sign Out</button>-->
     <button type="button" class="btn btn-primary" onclick="addNewItem()">Add Item</button>
-    <!--<pre id="content"></pre>-->
+    <pre id="content"></pre>
 
-    <div class="col-sm-4 col-md-4 col-lg-4">
+    <div class="col-sm-4 col-md-4 col-lg-4 nopadding">
       <div class="panel panel-default" id="today">
         <div class="panel-heading">
           <h3 class="panel-title">Today</h3>
@@ -79,9 +80,9 @@
         <div class="panel-body">
           <div>
             <div class="hours">
-              <div ng-repeat="halfHour in handleHours.data.hours track by $index">
-              <div class="label">{{halfHour.hour+":"+halfHour.min}} {{halfHour.am ? "AM":"PM"}}</div>
-              <input class="hourInput" type="text" placeholder="What are you doing? " aria-describedby="basic-addon2" >
+              <div  ng-repeat="halfHour in handleHours.data.hours track by $index">
+                <div class="label">{{halfHour.hour+":"+halfHour.min}} {{halfHour.am ? "AM":"PM"}}</div>
+                <input class="hourInput" type="text" value={{halfHour.task}}>
             </div>
             </div>
           </div>

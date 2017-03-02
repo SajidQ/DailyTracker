@@ -1,7 +1,7 @@
 var app = angular.module('DailyTracker', []);
 
 
-app.controller('mainCtrl', function($scope, $window) {
+app.controller('mainCtrl', function($scope, $window, HandleToday, HandleAPIInteraction) {
   $window.onload = function(){
     $scope.initiatePage.handleClientLoad();
   }
@@ -68,7 +68,7 @@ app.controller('mainCtrl', function($scope, $window) {
       var textContent = document.createTextNode(message + '\n');
       pre.append(textContent);
     },
-    listUpcomingEvents: function() {
+    listUpcomingEvents: function() {/*
       gapi.client.calendar.events.list({
         'calendarId': 'primary',
         'timeMin': (new Date()).toISOString(),
@@ -92,7 +92,7 @@ app.controller('mainCtrl', function($scope, $window) {
         } else {
           $scope.initiatePage.appendPre('No upcoming events found.');
         }
-      });
+      });*/
     },
     addNewItem: function(){
 
@@ -152,37 +152,8 @@ app.controller('mainCtrl', function($scope, $window) {
     },
     functions:{
       initiateHours:function(){
-        //var hour=12;
-        var min = "00";
-        var am = true;
-        for(var i=12; i<48; i++){
-
-          var hour = i;
-          if(i>=24)
-          {
-            am= false;
-            if(i!=24 && i!==25)
-              hour=hour-24;
-          }
-
-          if(i%2!==0)
-          {
-            min="30";
-          }
-          else {
-            min="00";
-          }
-
-
-
-          $scope.handleHours.data.hours.push({
-            id:i,
-            hour: Math.floor(hour/2),
-            min: min,
-            am: am,
-            task:""
-          });
-        }
+        HandleAPIInteraction.getToday(gapi);
+        $scope.handleHours.data.hours=HandleToday.initiateHours();
       }
     }
   };
