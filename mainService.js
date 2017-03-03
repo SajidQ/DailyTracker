@@ -7,6 +7,19 @@ app.service('GenericFunctions', function(){
 });
 
 app.service('HandleAPIInteraction', function(GenericFunctions){
+  //summary: gets list of calendars,
+  //check if 'DailyTracker' is one of the calendars
+  this.checkDailyTrackerCalendarExists(){
+    //get calendars
+    gapi.client.calendar.calendarList.list().then(function(response){
+      //look for DailyTracker
+
+
+      //else create it
+    });
+  };
+
+  //summary: get the list of event for today
   this.getToday = function(gapi){
     var today = new Date();
     today.setHours(0,0,0,0);
