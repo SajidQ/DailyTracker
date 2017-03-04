@@ -7,27 +7,49 @@ app.service('GenericFunctions', function(){
 });
 
 app.service('HandleAPIInteraction', function(GenericFunctions){
+  this.gapi = null;
+
+  this.setGapi = function(gapi){
+      this.gapi = gapi;
+  }
+
   //summary: gets list of calendars,
   //check if 'DailyTracker' is one of the calendars
-  this.checkDailyTrackerCalendarExists(){
+  this.checkDailyTrackerCalendarExists= function(){
     //get calendars
-    gapi.client.calendar.calendarList.list().then(function(response){
-      //look for DailyTracker
 
+    this.gapi.client.calendar.calendarList.list().then(function(response){
+      //look for DailyTracker
+      var found = false;
+      for(var i=0; i< response.result.items.length; i++){
+        if(response.result.items[i].summary==="DailyTracker"){
+          found = true;
+        }
+      }
 
       //else create it
+      if(!found){
+        calendar = {
+            'summary': 'DailyTracker',
+            'timeZone': 'America/Los_Angeles'
+        }
+
+        this.gapi.client.calendar.calendarList.insert(calendar).then(function(response){
+        });
+      }
     });
   };
 
   //summary: get the list of event for today
-  this.getToday = function(gapi){
+  this.getToday = function(){
+    this.checkDailyTrackerCalendarExists();
     var today = new Date();
     today.setHours(0,0,0,0);
     var tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     tomorrow.setHours(0,0,0,0);
 
-    gapi.client.calendar.events.list({
+    this.gapi.client.calendar.events.list({
       'calendarId': 'primary',
       'timeMin': (today).toISOString(),
       'timeMax': (tomorrow).toISOString(),

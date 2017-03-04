@@ -22,6 +22,7 @@ app.controller('mainCtrl', function($scope, $window, HandleToday, HandleAPIInter
     },
     handleClientLoad:function() {
       gapi.load('client:auth2', $scope.initiatePage.initClient);
+      HandleAPIInteraction.setGapi(gapi);
     },
     initClient() {
       gapi.client.init({
@@ -152,9 +153,10 @@ app.controller('mainCtrl', function($scope, $window, HandleToday, HandleAPIInter
     },
     functions:{
       initiateHours:function(){
-        HandleAPIInteraction.getToday(gapi);
+        HandleAPIInteraction.getToday();
         $scope.handleHours.data.hours=HandleToday.initiateHours();
-      }
+      },
+
     }
   };
 
