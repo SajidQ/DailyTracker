@@ -48,7 +48,6 @@ app.controller('mainCtrl', function($scope, $window, HandleToday, HandleAPIInter
       if (isSignedIn) {
         $scope.initiatePage.data.authorizeButton.css("display", "none");
         $scope.initiatePage.data.signoutButton.css("display", "block");;
-        $scope.initiatePage.listUpcomingEvents();
         $scope.initiatePage.data.signedIn = true;
 
         $scope.handleHours.functions.initiateHours();
@@ -63,37 +62,6 @@ app.controller('mainCtrl', function($scope, $window, HandleToday, HandleAPIInter
     },
     handleSignoutClick: function(event) {
       gapi.auth2.getAuthInstance().signOut();
-    },
-    appendPre:function(message) {
-      var pre = $('#content');
-      var textContent = document.createTextNode(message + '\n');
-      pre.append(textContent);
-    },
-    listUpcomingEvents: function() {/*
-      gapi.client.calendar.events.list({
-        'calendarId': 'primary',
-        'timeMin': (new Date()).toISOString(),
-        'showDeleted': false,
-        'singleEvents': true,
-        'maxResults': 10,
-        'orderBy': 'startTime'
-      }).then(function(response) {
-        var events = response.result.items;
-        $scope.initiatePage.appendPre('Upcoming events:');
-
-        if (events.length > 0) {
-          for (i = 0; i < events.length; i++) {
-            var event = events[i];
-            var when = event.start.dateTime;
-            if (!when) {
-              when = event.start.date;
-            }
-            $scope.initiatePage.appendPre(event.summary + ' (' + when + ')')
-          }
-        } else {
-          $scope.initiatePage.appendPre('No upcoming events found.');
-        }
-      });*/
     },
     addNewItem: function(){
 

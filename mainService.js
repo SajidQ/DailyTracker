@@ -38,6 +38,7 @@ app.service('HandleAPIInteraction', function(GenericFunctions){
             'timeZone': 'America/Los_Angeles'
         }
 
+        //add DailyTracker as new calendar
         data.gapi.client.calendar.calendars.insert(calendar).then(function(response){
             data.DailyTrackerCalendar = response.result.id;
             data.service.getToday();
@@ -46,7 +47,6 @@ app.service('HandleAPIInteraction', function(GenericFunctions){
       else{
           data.service.getToday();
       }
-
 
     });
   };
@@ -65,7 +65,7 @@ app.service('HandleAPIInteraction', function(GenericFunctions){
       'timeMax': (tomorrow).toISOString(),
       'showDeleted': false,
       'singleEvents': true,
-      'maxResults': 10,
+      'maxResults': 100,
       'orderBy': 'startTime'
     }).then(function(response) {
       var events = response.result.items;

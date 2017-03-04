@@ -3,19 +3,20 @@
 ##To Do List
 
 <ul>
-<li> <del>Add angular</del> 2/25/17
-<li> <del>Change screen based on Authorization</del> 2/26/17
-<li> <del>Setup UI to show today by hours</del> 2/28/2017
-<li> <del>Get items for today</del> 3/1/17
-<li><del>Get list of calendars</del></li> 3/2/17
-<li><del>Check if DailyTracker calendar is a part of list, if not add it</del>3/4/17</li>
-<li>Grab all the tasks from the DailyTracker and show on the hourly today list.
+<li> <del>Add angular</del> 2/25/17 </li>
+<li> <del>Change screen based on Authorization</del> 2/26/17</li>
+<li> <del>Setup UI to show today by hours</del> 2/28/2017</li>
+<li> <del>Get items for today</del> 3/1/17</li>
+<li><del>Get list of calendars</del> 3/2/17</li>
+<li><del>Check if DailyTracker calendar is a part of list, if not add it</del> 3/4/17</li>
+<li>Save user's input in list to calendar</li>
+<li>Grab all the tasks from the DailyTracker and show on the hourly today list.</li>
 <li> Grab tasks from other calendars and layer it on top of hourly today list. </li>
-<li> Show on timeline
-<li> Enable editing for already added items
-<li> Enable adding for new entries on timeline
-<li> Add yearly, monthly goals
-<li> Revisit Objective
+<li> Show on timeline</li>
+<li> Enable editing for already added items</li>
+<li> Enable adding for new entries on timeline</li>
+<li> Add yearly, monthly goals</li>
+<li> Revisit Objective</li>
 </ul>
 
 
