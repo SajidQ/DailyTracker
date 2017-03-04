@@ -3,6 +3,7 @@ body{
   color: #fff;
   padding: 0;
   margin: 0;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .jumbotron{
@@ -34,19 +35,19 @@ body{
 }
 
 .panel{
-  width: 280px;
+  width: 300px;
 
 }
 
 .panel-body{
-  height: 560px !important;
-  overflow:scroll;
+
 }
 
 .hours{
   padding: 0px;
   margin: 0px;
   width: 100%;
+  display: block;
 }
 
 .hours .label{

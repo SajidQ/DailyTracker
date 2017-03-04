@@ -7,50 +7,60 @@ app.service('GenericFunctions', function(){
 });
 
 app.service('HandleAPIInteraction', function(GenericFunctions){
-  this.gapi = null;
+  var data = {
+    gapi:null,
+    DailyTrackerCalendar: null,
+    service: this
+  };
 
   this.setGapi = function(gapi){
-      this.gapi = gapi;
-  }
+      data.gapi = gapi;
+  };
 
   //summary: gets list of calendars,
   //check if 'DailyTracker' is one of the calendars
   this.checkDailyTrackerCalendarExists= function(){
     //get calendars
+    data.service = this;
 
-    this.gapi.client.calendar.calendarList.list().then(function(response){
+    data.gapi.client.calendar.calendarList.list().then(function(response){
       //look for DailyTracker
-      var found = false;
       for(var i=0; i< response.result.items.length; i++){
         if(response.result.items[i].summary==="DailyTracker"){
-          found = true;
+          data.DailyTrackerCalendar = response.result.items[i].id;
         }
       }
 
       //else create it
-      if(!found){
+      if(data.DailyTrackerCalendar==null){
         calendar = {
             'summary': 'DailyTracker',
             'timeZone': 'America/Los_Angeles'
         }
 
-        this.gapi.client.calendar.calendarList.insert(calendar).then(function(response){
+        data.gapi.client.calendar.calendars.insert(calendar).then(function(response){
+            data.DailyTrackerCalendar = response.result.id;
+            data.service.getToday();
         });
       }
+      else{
+          data.service.getToday();
+      }
+
+
     });
   };
 
   //summary: get the list of event for today
   this.getToday = function(){
-    this.checkDailyTrackerCalendarExists();
     var today = new Date();
     today.setHours(0,0,0,0);
     var tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     tomorrow.setHours(0,0,0,0);
 
-    this.gapi.client.calendar.events.list({
-      'calendarId': 'primary',
+    data.gapi.client.calendar.events.list({
+      'calendarId': data.DailyTrackerCalendar,
       'timeMin': (today).toISOString(),
       'timeMax': (tomorrow).toISOString(),
       'showDeleted': false,

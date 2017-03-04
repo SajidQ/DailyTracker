@@ -153,7 +153,7 @@ app.controller('mainCtrl', function($scope, $window, HandleToday, HandleAPIInter
     },
     functions:{
       initiateHours:function(){
-        HandleAPIInteraction.getToday();
+        HandleAPIInteraction.checkDailyTrackerCalendarExists();
         $scope.handleHours.data.hours=HandleToday.initiateHours();
       },
 
