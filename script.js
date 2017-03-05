@@ -124,7 +124,9 @@ app.controller('mainCtrl', function($scope, $window, HandleToday, HandleAPIInter
         HandleAPIInteraction.checkDailyTrackerCalendarExists();
         $scope.handleHours.data.hours=HandleToday.initiateHours();
       },
-
+      addHour:function(id){
+        HandleAPIInteraction.updateHour($scope.handleHours.data.hours, id);
+      }
     }
   };
 

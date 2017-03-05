@@ -10,11 +10,13 @@ app.service('HandleAPIInteraction', function(GenericFunctions){
   var data = {
     gapi:null,
     DailyTrackerCalendar: null,
-    service: this
+    service: this,
+    today:null
   };
 
   this.setGapi = function(gapi){
       data.gapi = gapi;
+      data.today = new Date();
   };
 
   //summary: gets list of calendars,
@@ -34,8 +36,7 @@ app.service('HandleAPIInteraction', function(GenericFunctions){
       //else create it
       if(data.DailyTrackerCalendar==null){
         calendar = {
-            'summary': 'DailyTracker',
-            'timeZone': 'America/Los_Angeles'
+            'summary': 'DailyTracker'
         }
 
         //add DailyTracker as new calendar
@@ -47,6 +48,68 @@ app.service('HandleAPIInteraction', function(GenericFunctions){
       else{
           data.service.getToday();
       }
+
+    });
+  };
+
+  this.updateHour = function(hoursList, id){
+    var today = data.today;
+    var newItem = hoursList[id];
+
+    //calculate hours
+    var year = today.getFullYear();
+    var month = today.getMonth()+1;
+    var day = today.getDate();
+
+    if(month<10)
+      month = "0"+month;
+    if(day<10)
+      day = "0"+day;
+      /*
+    var hour = Math.floor(id/2);
+    var min = "00";
+
+    if(id%2==1)
+    {
+      min = "30";
+    }*/
+    var hour = newItem.hour;
+    var min = newItem.min;
+    var endHour = hour;
+    var zone=today.toString().substring(29,33);
+    var endMin = "30";
+    if(min==="30")
+    {
+      endMin = "00";
+      endHour ++;
+    }
+
+    if(hour<10)
+      hour = "0"+hour;
+
+    if(endHour<10)
+      endHour = "0"+endHour;
+
+    var start = year+"-"+month+"-"+day+"T"+hour+":"+min+":00-"+zone;
+    var end = year+"-"+month+"-"+day+"T"+endHour+":"+endMin+":00-"+zone;
+
+    //send event
+    var event = {
+      'summary': newItem.task.substring(0,30),
+      'location': '',
+      'description': newItem.task,
+      'start': {
+        'dateTime': start
+      },
+      'end': {
+        'dateTime': end
+      }
+    };
+
+    gapi.client.calendar.events.insert({
+      'calendarId': data.DailyTrackerCalendar,
+      'resource': event
+    }).then(function(response){
 
     });
   };
@@ -79,6 +142,9 @@ app.service('HandleAPIInteraction', function(GenericFunctions){
           }
           GenericFunctions.append(event.summary + ' (' + when + ')')
         }
+
+
+
       } else {
         GenericFunctions.append('No upcoming events found.');
       }
@@ -95,7 +161,9 @@ app.service('HandleToday', function(){
 
    //loop though 24 hours (x2 because of 30min interval),
    //starting at 6am
+   var count =0;
    for(var i=12; i<48; i++){
+
      //determine hour + period
      var hour = i;
      if(i>=24)
@@ -113,12 +181,13 @@ app.service('HandleToday', function(){
      }
 
      hours.push({
-       id:i,
+       id:count,
        hour: Math.floor(hour/2),
        min: min,
        am: am,
        task:""
      });
+     count++;
    }
 
    return hours;
