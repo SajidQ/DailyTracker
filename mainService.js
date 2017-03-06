@@ -166,12 +166,14 @@ app.service('HandleAPIInteraction', function(GenericFunctions, $rootScope){
         }
       };
 
-      gapi.client.calendar.events.insert({
-        'calendarId': data.DailyTrackerCalendar,
-        'resource': event
-        }).then(function(response){
-
-      });
+      (function(hoursList,id){
+        gapi.client.calendar.events.insert({
+          'calendarId': data.DailyTrackerCalendar,
+          'resource': event
+          }).then(function(response){
+              hoursList[id].eventID = response.result.id; 
+        });
+      })(hoursList,id);
     }
     else{
       var event = {
