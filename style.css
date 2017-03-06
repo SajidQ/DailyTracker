@@ -17,6 +17,11 @@ body{
   height:100% !important;
 }
 
+#signedIn{
+  margin: 0 auto !important;
+  width: 1000px !important; 
+}
+
 .container{
   width:100% !important;
   height:100% !important;
@@ -79,4 +84,9 @@ body{
   color: #525252 !important;
   font-family: 'Indie Flower', cursive !important;
   width: 180px;
+}
+
+.hours input:focus{
+  outline:0 !important;
+  outline-width: 0 !important;
 }
