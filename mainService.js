@@ -119,6 +119,9 @@ app.service('HandleAPIInteraction', function(GenericFunctions, $rootScope){
     var today = data.today;
     var newItem = hoursList[id];
 
+    if(newItem.task==="")
+      return;
+
     //calculate hours
     var year = today.getFullYear();
     var month = today.getMonth()+1;
