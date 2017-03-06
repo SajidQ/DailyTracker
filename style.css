@@ -73,10 +73,10 @@ body{
 .hours input{
   border: 0px !important;
   padding: 0px !important;
-  height: 20px !important;
-  font-size:14px !important;
+  height: 26px !important;
+  font-size:18px !important;
   border-bottom: 1px solid #dcdcdc !important;
   color: #525252 !important;
-  font-family: font-family: 'Indie Flower', cursive;
+  font-family: 'Indie Flower', cursive !important;
   width: 180px;
 }

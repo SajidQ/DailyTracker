@@ -11,6 +11,10 @@ app.controller('mainCtrl', function($scope, $window, HandleToday, HandleAPIInter
     $scope.initiatePage.data.signoutButton = $('#signout-button');
   });
 
+  function getThis(){
+    return this;
+  }
+
   $scope.initiatePage = {
     data: {
       CLIENT_ID: '729784946085-pl50l2td2e4jjoadi0ad06cmesbujbno.apps.googleusercontent.com',
@@ -22,7 +26,10 @@ app.controller('mainCtrl', function($scope, $window, HandleToday, HandleAPIInter
     },
     handleClientLoad:function() {
       gapi.load('client:auth2', $scope.initiatePage.initClient);
-      HandleAPIInteraction.setGapi(gapi);
+      HandleAPIInteraction.setGapi(gapi, this);
+    },
+    applyScope:function(){
+      $scope.apply();
     },
     initClient() {
       gapi.client.init({
@@ -62,53 +69,6 @@ app.controller('mainCtrl', function($scope, $window, HandleToday, HandleAPIInter
     },
     handleSignoutClick: function(event) {
       gapi.auth2.getAuthInstance().signOut();
-    },
-    addNewItem: function(){
-
-      var response = prompt("Event?");
-      $scope.initiatePage.addEvent(response);
-    },
-
-    addEvent:function(label){
-      var time = new Date();
-      var event = {
-        'summary': label,
-        'start': {
-          'dateTime': '2017-02-28T09:00:00-07:00',
-          'timeZone': 'America/Los_Angeles'
-        },
-        'end': {
-          'dateTime': '2017-02-28T17:00:00-07:00',
-          'timeZone': 'America/Los_Angeles'
-        },
-        'recurrence': [
-          'RRULE:FREQ=DAILY;COUNT=2'
-        ],
-        'attendees': [
-          {'email': 'lpage@example.com'},
-          {'email': 'sbrin@example.com'}
-        ],
-        'reminders': {
-          'useDefault': false,
-          'overrides': [
-            {'method': 'email', 'minutes': 24 * 60},
-            {'method': 'popup', 'minutes': 10}
-          ]
-        }
-      };
-
-      var request = gapi.client.calendar.events.insert({
-        'calendarId': 'primary',
-        'resource': event
-      });
-
-      request.execute(function(event) {
-        $scope.initiatePage.appendPre('Event created: ' + event.htmlLink);
-      });
-
-      var cals = gapi.client.calendar.calendarList.list().then(function(response){
-
-      });
     }
 
   };
@@ -116,13 +76,16 @@ app.controller('mainCtrl', function($scope, $window, HandleToday, HandleAPIInter
 
   $scope.handleHours={
     data:{
-      hours:[],
-
+      hours:[]
     },
     functions:{
+      applyScope:function(){
+        $scope.$apply();
+      },
       initiateHours:function(){
-        HandleAPIInteraction.checkDailyTrackerCalendarExists();
+        HandleAPIInteraction.setThis(getThis());
         $scope.handleHours.data.hours=HandleToday.initiateHours();
+        HandleAPIInteraction.checkDailyTrackerCalendarExists($scope.handleHours.data.hours);
       },
       addHour:function(id){
         HandleAPIInteraction.updateHour($scope.handleHours.data.hours, id);
