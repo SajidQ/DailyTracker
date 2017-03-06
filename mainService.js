@@ -150,7 +150,7 @@ app.service('HandleAPIInteraction', function(GenericFunctions, $rootScope){
 
     //send event
 
-    if(newItem.eventID = null){
+    if(newItem.eventID === null){
       var event = {
         'summary': newItem.task.substring(0,30),
         'location': '',

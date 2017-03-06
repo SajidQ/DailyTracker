@@ -10,8 +10,8 @@
 <li><del>Get list of calendars</del> 3/2/17</li>
 <li><del>Check if DailyTracker calendar is a part of list, if not add it</del> 3/4/17</li>
 <li><del>Save user's input in list to calendar</del> 3/4/17</li>
-<li>Update existing event, do not rewrite </li>
-<li>Grab all the tasks from the DailyTracker and show on the hourly today list.</li>
+<li><del>Update existing event, do not rewrite</del> 3/5/17</li>
+<li><del>Grab all the tasks from the DailyTracker and show on the hourly today list.</del> 3/5/17</li>
 <li> Grab tasks from other calendars and layer it on top of hourly today list. </li>
 <li> Show on timeline</li>
 <li> Enable editing for already added items</li>
