@@ -130,7 +130,7 @@ app.service('HandleAPIInteraction', function(GenericFunctions, $rootScope){
 
         //if no daily goal available, create empty item
         if(!foundDailyGoal){
-          var endTime = new Date();
+          var endTime = today;
           endTime.setMinutes(today.getMinutes() + 20);
           var event = {
             'summary': "DailyGoal",
