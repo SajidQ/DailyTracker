@@ -27,6 +27,7 @@ app.controller('mainCtrl', function($scope, $window, HandleToday, HandleAPIInter
     handleClientLoad:function() {
       gapi.load('client:auth2', $scope.initiatePage.initClient);
       HandleAPIInteraction.setGapi(gapi, this);
+
     },
     applyScope:function(){
       $scope.apply();
@@ -56,8 +57,8 @@ app.controller('mainCtrl', function($scope, $window, HandleToday, HandleAPIInter
         $scope.initiatePage.data.authorizeButton.css("display", "none");
         $scope.initiatePage.data.signoutButton.css("display", "block");;
         $scope.initiatePage.data.signedIn = true;
-
         $scope.handleHours.functions.initiateHours();
+        HandleAPIInteraction.checkDailyTrackerCalendarExists($scope.handleHours.data.hours, $scope.handleGoals);
         $scope.$apply();
       } else {
         $scope.initiatePage.data.authorizeButton.css("display", "block");
@@ -85,7 +86,6 @@ app.controller('mainCtrl', function($scope, $window, HandleToday, HandleAPIInter
       initiateHours:function(){
         HandleAPIInteraction.setThis(getThis());
         $scope.handleHours.data.hours=HandleToday.initiateHours();
-        HandleAPIInteraction.checkDailyTrackerCalendarExists($scope.handleHours.data.hours);
       },
       addHour:function(id){
         HandleAPIInteraction.updateHour($scope.handleHours.data.hours, id);
@@ -96,11 +96,14 @@ app.controller('mainCtrl', function($scope, $window, HandleToday, HandleAPIInter
   $scope.handleGoals = {
     data:{
       yearly:[],
-      monthly:[],
+      monthly:{id:null, list:[]},
       weekly:[],
-      daily:[]
+      daily:{id:null, raw:"", list:[]}
     },
     functions:{
+      initiateGoals:function(){
+
+      },
       addYearGoal:function(){
 
       },

@@ -1,4 +1,6 @@
 # DailyTracker
+##Welcome!
+DailyTracker is an online planning dashboard for tracking days by half-hours and managing goals throughout the year using the Google Calendar API.
 
 ##To Do List
 
@@ -14,15 +16,21 @@
 <li><del>Grab all the tasks from the DailyTracker and show on the hourly today list.</del> 3/5/17</li>
 <li> Grab tasks from other calendars and layer it on top of hourly today list. </li>
 <li> Show on timeline</li>
-<li> Enable editing for already added items</li>
-<li> Enable adding for new entries on timeline</li>
-<li> Add yearly, monthly goals</li>
+<li>Add hidden Daily goal event</li>
+<li>Load and show daily goals in goals section</li>
+<li>Add hidden monthly goal event</li>
+<li>Load and show monthly goals in goals section</li>
+<li>Add hidden yearly goal event</li>
+<li>Load and show yearly goals in goals section</li>
 <li> Revisit Objective</li>
 </ul>
 
 
 ---
 ##Notes
+### Week of 3/6/17
+3/6/17 - Added to do items related to showing the daily, monthly, and yearly goals.
+
 ### Week of 2/27/17
 3/2/17 - It seems like a better idea to add a calendar labeled DailyTrackerJS so it doesn't interfere with other calendars the user has. In addition, it might be better to show a layering of the other tasks from the calendar?
 Tasks to add: get list of calendars, check if DailyTracker calendar is a part of list, if not add it, grab all the tasks from the DailyTracker and show on the hourly today list. Additionally, grab tasks from other calendars and layer it on top of hourly today list.

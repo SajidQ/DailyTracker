@@ -24,12 +24,22 @@ app.service('HandleAPIInteraction', function(GenericFunctions, $rootScope){
     data.controller = that;
   };
 
+
+  this.createNewEvent = function(event){
+      return gapi.client.calendar.events.insert({
+          'calendarId': data.DailyTrackerCalendar,
+          'resource': event
+          }).then(function(response){
+              return response.result.id;
+        });
+  };
+
   //summary: gets list of calendars,
   //check if 'DailyTracker' is one of the calendars
-  this.checkDailyTrackerCalendarExists= function(handleHoursPtr){
+  this.checkDailyTrackerCalendarExists= function(handleHoursPtr, handleGoals){
     //get calendars
     data.service = this;
-    (function(handleHoursPtr){
+    (function(handleHoursPtr, handleGoals){
       data.gapi.client.calendar.calendarList.list().then(function(response){
         //look for DailyTracker
         for(var i=0; i< response.result.items.length; i++){
@@ -47,28 +57,28 @@ app.service('HandleAPIInteraction', function(GenericFunctions, $rootScope){
           //add DailyTracker as new calendar
           data.gapi.client.calendar.calendars.insert(calendar).then(function(response){
             data.DailyTrackerCalendar = response.result.id;
-            data.service.getToday(handleHoursPtr);
+            data.service.getToday(handleHoursPtr, handleGoals);
           });
         }
         else{
-          data.service.getToday(handleHoursPtr);
+          data.service.getToday(handleHoursPtr, handleGoals);
         }
 
       });
-    })(handleHoursPtr);
+    })(handleHoursPtr, handleGoals);
 
   };
 
 
   //summary: get the list of event for today
-  this.getToday = function(handleHoursPtr){
+  this.getToday = function(handleHoursPtr, handleGoals){
     var today = new Date();
     today.setHours(0,0,0,0);
     var tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     tomorrow.setHours(0,0,0,0);
 
-    (function(hoursPtr){
+    (function(hoursPtr, handleGoals){
       var temp = hoursPtr;
       data.gapi.client.calendar.events.list({
         'calendarId': data.DailyTrackerCalendar,
@@ -81,36 +91,65 @@ app.service('HandleAPIInteraction', function(GenericFunctions, $rootScope){
       }).then(function(response) {
         var events = response.result.items;
 
+        var foundDailyGoal = false;
         if (events.length > 0) {
           for (i = 0; i < events.length; i++) {
             var event = events[i];
-            var startDate = new Date(event.start.dateTime);
-            var hour = startDate.getHours();
-            var min = startDate.getMinutes();
+            if(event.summary.search("DailyGoal")===-1){
+              var startDate = new Date(event.start.dateTime);
+              var hour = startDate.getHours();
+              var min = startDate.getMinutes();
 
-            //after 6am
-            if(hour>=6){
-              var convHour = (hour-6)*2;
-              if(min===30)
-                convHour++;
+              //after 6am
+              if(hour>=6){
+                var convHour = (hour-6)*2;
+                if(min===30)
+                  convHour++;
 
-              if(convHour>=0 && convHour<hoursPtr.length){
-                hoursPtr[convHour].task = event.summary;
-                hoursPtr[convHour].eventID = event.id;
+                if(convHour>=0 && convHour<hoursPtr.length){
+                  hoursPtr[convHour].task = event.summary;
+                  hoursPtr[convHour].eventID = event.id;
+                }
+
+                GenericFunctions.append(event.summary + ' (' + startDate + ')');
               }
-
-              GenericFunctions.append(event.summary + ' (' + startDate + ')')
+            }
+            else{
+              foundDailyGoal = true;
+              handleGoals.data.daily.id = event.id;
+              handleGoals.data.daily.raw = event.summary;
+              GenericFunctions.append(event.summary + ' (' + startDate + ')');
             }
           }
-
           $rootScope.$apply();
 
-        } else {
+        }
+        else {
           GenericFunctions.append('No upcoming events found.');
+        }
+
+        //if no daily goal available, create empty item
+        if(!foundDailyGoal){
+          var endTime = new Date();
+          endTime.setMinutes(today.getMinutes() + 20);
+          var event = {
+            'summary': "DailyGoal",
+            'location': '',
+            'start': {
+              'dateTime': (today).toISOString()
+            },
+            'end': {
+              'dateTime': (endTime).toISOString()
+            },
+            'transparency':'opaque'
+          };
+
+          handleGoals.data.daily.id = data.service.createNewEvent(event);
+          handleGoals.data.daily.raw = "";
         }
       });
 
-    })(handleHoursPtr);
+    })(handleHoursPtr, handleGoals);
   };
 
 
@@ -171,7 +210,7 @@ app.service('HandleAPIInteraction', function(GenericFunctions, $rootScope){
           'calendarId': data.DailyTrackerCalendar,
           'resource': event
           }).then(function(response){
-              hoursList[id].eventID = response.result.id; 
+              hoursList[id].eventID = response.result.id;
         });
       })(hoursList,id);
     }

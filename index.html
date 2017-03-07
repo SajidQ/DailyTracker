@@ -30,8 +30,8 @@
   onreadystatechange="if (this.readyState === 'complete') this.onload()">
   </script>
 
-  <script src="script.js?v1" type="text/javascript"></script>
-  <script src="mainService.js?v6" type="text/javascript"></script>
+  <script src="script.js?v2" type="text/javascript"></script>
+  <script src="mainService.js?v1" type="text/javascript"></script>
 </head>
 
 <body ng-controller="mainCtrl">
@@ -80,13 +80,31 @@
           <h3 class="panel-title">Today</h3>
         </div>
         <div class="panel-body">
-          <div>
+
             <div class="hours">
               <div  ng-repeat="halfHour in handleHours.data.hours track by $index">
                 <div class="label">{{halfHour.hour+":"+halfHour.min}} {{halfHour.am ? "AM":"PM"}}</div>
                 <input class="hourInput" type="text" value="{{halfHour.task}}" ng-model="halfHour.task" ng-blur="handleHours.functions.addHour(halfHour.id)">
             </div>
             </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4 col-md-4 col-lg-4 nopadding">
+      <div class="panel panel-default" id="dailyGoals">
+        <div class="panel-heading">
+          <h3 class="panel-title">Daily Goals</h3>
+        </div>
+        <div class="panel-body">
+
+          <div class="checkbox">
+            <label><input type="checkbox" value="">Option 1</label>
+          </div>
+          <div class="checkbox">
+            <label><input type="checkbox" value="">Option 2</label>
+          </div>
+          <div class="checkbox disabled">
+            <label><input type="checkbox" value="" disabled>Option 3</label>
           </div>
         </div>
       </div>
