@@ -34,6 +34,16 @@ app.service('HandleAPIInteraction', function(GenericFunctions, $rootScope){
         });
   };
 
+  this.updateEvent = function(event, eventID){
+      return gapi.client.calendar.events.update({
+          'calendarId': data.DailyTrackerCalendar,
+          'eventId':eventID,
+          'resource': event
+          }).then(function(response){
+              return response.result;
+        });
+  };
+
   //summary: gets list of calendars,
   //check if 'DailyTracker' is one of the calendars
   this.checkDailyTrackerCalendarExists= function(handleHoursPtr, handleGoals){
@@ -117,7 +127,8 @@ app.service('HandleAPIInteraction', function(GenericFunctions, $rootScope){
             else{
               foundDailyGoal = true;
               handleGoals.data.daily.id = event.id;
-              handleGoals.data.daily.raw = event.summary;
+              //handleGoals.data.daily.raw = event.summary;
+              handleGoals.data.daily.list = handleGoals.functions.parseDailyGoal(event.summary);
               GenericFunctions.append(event.summary + ' (' + startDate + ')');
             }
           }
@@ -141,11 +152,11 @@ app.service('HandleAPIInteraction', function(GenericFunctions, $rootScope){
             'end': {
               'dateTime': (endTime).toISOString()
             },
-            'transparency':'opaque'
+            'transparency':'opaque'//'transparent'
           };
 
           handleGoals.data.daily.id = data.service.createNewEvent(event);
-          handleGoals.data.daily.raw = "";
+          handleGoals.data.daily.list = [];
         }
       });
 
@@ -282,4 +293,46 @@ app.service('HandleToday', function(){
 
     return hours;
   };
+});
+
+
+
+app.service('HandleGoals', function(HandleAPIInteraction){
+
+  this.parseDailyGoal = function(input){
+    var eraseStrLen = ("DailyGoal: ").length;
+    var newInput = input.substring(eraseStrLen);
+
+    var list =  newInput.split(";;;");
+    var parsedList = [];
+
+    for(var i=0; i<list.length; i++){
+      if(list[i]!==""){
+        var splitItem = list[i].split(":::");
+        var task = {
+          task: splitItem[0],
+          complete:splitItem[1]
+        };
+        parsedList.push(task);
+      }
+    }
+
+    return parsedList;
+  };
+
+  this.saveDailyGoal = function(dailyGoal){
+    //update the goal
+    var rawStr = "DailyGoal: ";
+    for(var i=0; i<dailyGoal.list.length;i++){
+      var small = dailyGoal.list[i].task+":::"+dailyGoal.list[i].complete+";;;";
+      rawStr+=small;
+    }
+
+    var event = {
+      'summary': rawStr,
+    };
+
+    HandleAPIInteraction.updateEvent(event, dailyGoal.id);
+  };
+
 });

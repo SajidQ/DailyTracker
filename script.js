@@ -1,7 +1,7 @@
 var app = angular.module('DailyTracker', []);
 
 
-app.controller('mainCtrl', function($scope, $window, HandleToday, HandleAPIInteraction) {
+app.controller('mainCtrl', function($scope, $window, HandleToday, HandleAPIInteraction, HandleGoals) {
   $window.onload = function(){
     $scope.initiatePage.handleClientLoad();
   }
@@ -98,11 +98,13 @@ app.controller('mainCtrl', function($scope, $window, HandleToday, HandleAPIInter
       yearly:[],
       monthly:{id:null, list:[]},
       weekly:[],
-      daily:{id:null, raw:"", list:[]}
+      daily:{id:null, list:[]}
     },
     functions:{
       initiateGoals:function(){
-
+        //DailyGoal checked/initiated in HandleAPIInteraction.getToday()
+        //check for monthly goals
+        //check for yearly goal
       },
       addYearGoal:function(){
 
@@ -122,12 +124,18 @@ app.controller('mainCtrl', function($scope, $window, HandleToday, HandleAPIInter
       getWeeklyGoal:function(){
 
       },
-      addDailyGoal:function(){
-
+      parseDailyGoal:function(input){
+        return HandleGoals.parseDailyGoal(input);
       },
-      getDailyGoal:function(){
-
+      addNewDailyGoal:function(){
+        $scope.handleGoals.data.daily.list.push({
+          task: "",
+          complete:false
+        });
       },
+      saveDailyGoals:function(){
+        HandleGoals.saveDailyGoal($scope.handleGoals.data.daily);
+      }
     }
 
   };

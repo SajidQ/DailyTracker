@@ -27,9 +27,35 @@ DailyTracker is an online planning dashboard for tracking days by half-hours and
 
 
 ---
+##Ideas
+<ul>
+<li>Switch to a start/stop tracker?</li>
+<li>Look in to using Google App Storage for goals and habit tracking</li>
+<li>Look into saving user emotions day by day? Or by hour? </li>
+<li>Look into connecting with Amazon for purchases? Or youTube watch history?</li>
+</ul>
+
+
+---
 ##Notes
 ### Week of 3/6/17
 3/6/17 - Added to do items related to showing the daily, monthly, and yearly goals.
+
+Organization:
+HandleAPIInteraction: handles all communication with gapi?
+
+-checkDailyTrackerCalendarExists: actually checks if the DailyTracker calendar exists but should should it call getToday?
+
+-getToday needs to be able to look through events for the day to check for the "DailyGoal" event since no other way to find that specific event through the api. How should the DailyGoal event summary be parsed? Right now it calls the 
+
+-getFirstOfMonth: To create. This needs to be able get the first for any month, grab the habit and goal events
+
+-getFirstOfYear: To create. This needs to be able get the first of any year and grab the year goal
+
+
+HandleToday
+
+handleGoals: For All the goals?
 
 ### Week of 2/27/17
 3/2/17 - It seems like a better idea to add a calendar labeled DailyTrackerJS so it doesn't interfere with other calendars the user has. In addition, it might be better to show a layering of the other tasks from the calendar?

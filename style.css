@@ -19,7 +19,7 @@ body{
 
 #signedIn{
   margin: 0 auto !important;
-  width: 1000px !important; 
+  width: 1000px !important;
 }
 
 .container{
@@ -46,6 +46,12 @@ body{
 
 .panel-body{
 
+}
+.panel-heading{
+  height: 100px !important; 
+}
+.panel-title {
+  height: 100px !important;
 }
 
 .hours{
