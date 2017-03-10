@@ -89,7 +89,6 @@ app.service('HandleAPIInteraction', function(GenericFunctions, $rootScope){
     tomorrow.setHours(0,0,0,0);
 
     (function(hoursPtr, handleGoals){
-      var temp = hoursPtr;
       data.gapi.client.calendar.events.list({
         'calendarId': data.DailyTrackerCalendar,
         'timeMin': (today).toISOString(),
@@ -142,15 +141,16 @@ app.service('HandleAPIInteraction', function(GenericFunctions, $rootScope){
         //if no daily goal available, create empty item
         if(!foundDailyGoal){
           var endTime = today;
-          endTime.setMinutes(today.getMinutes() + 20);
+
+          //endTime.setMinutes(today.getMinutes() + 20);
           var event = {
-            'summary': "DailyGoal",
+            'summary': "DailyGoal: ",
             'location': '',
             'start': {
               'dateTime': (today).toISOString()
             },
             'end': {
-              'dateTime': (endTime).toISOString()
+              'dateTime': (today).toISOString()
             },
             'transparency':'opaque'//'transparent'
           };
@@ -161,6 +161,59 @@ app.service('HandleAPIInteraction', function(GenericFunctions, $rootScope){
       });
 
     })(handleHoursPtr, handleGoals);
+  };
+
+
+  this.getFirstOfMonth = function(handleGoals){
+    var today = new Date();
+    today.setHours(0,0,0,0);
+    var firstday = new Date(today.getFullYear(), today.getMonth(), 1);
+
+    (function(handleGoals){
+      data.gapi.client.calendar.events.list({
+        'calendarId': data.DailyTrackerCalendar,
+        'timeMin': (firstday).toISOString(),
+        'timeMax': (firstday).toISOString(),
+        'showDeleted': false,
+        'singleEvents': true,
+        'maxResults': 10,
+        'orderBy': 'startTime'
+      }).then(function(response) {
+        var events = response.result.items;
+
+        var foundMonthGoal = false;
+        if (events.length > 0) {
+          for (i = 0; i < events.length; i++) {
+            var event = events[i];
+            if(event.summary.search("MonthGoal")!==-1){
+              foundDailyGoal = true;
+              handleGoals.data.monthly.id = event.id;
+              handleGoals.data.monthly.list = handleGoals.functions.parseGoalsList(event.summary);
+              break;
+            }
+          }
+        }
+
+        //if no daily goal available, create empty item
+        if(!foundMonthGoal){
+          var event = {
+            'summary': "MonthGoal: ",
+            'location': '',
+            'start': {
+              'dateTime': (firstday).toISOString()
+            },
+            'end': {
+              'dateTime': (firstday).toISOString()
+            },
+            'transparency':'opaque'//'transparent'
+          };
+
+          handleGoals.data.monthly.id = data.service.createNewEvent(event);
+          handleGoals.data.monthly.list = [];
+        }
+      });
+
+    })(handleGoals);
   };
 
 
@@ -299,8 +352,8 @@ app.service('HandleToday', function(){
 
 app.service('HandleGoals', function(HandleAPIInteraction){
 
-  this.parseDailyGoal = function(input){
-    var eraseStrLen = ("DailyGoal: ").length;
+  this.parseGoalsList = function(input, type){
+    var eraseStrLen = (type).length;
     var newInput = input.substring(eraseStrLen);
 
     var list =  newInput.split(";;;");
@@ -328,8 +381,16 @@ app.service('HandleGoals', function(HandleAPIInteraction){
       rawStr+=small;
     }
 
+    var today = new Date();
+    today.setHours(0,0,0,0);
     var event = {
       'summary': rawStr,
+      'start': {
+        'dateTime': (today).toISOString()
+      },
+      'end': {
+        'dateTime': (today).toISOString()
+      },
     };
 
     HandleAPIInteraction.updateEvent(event, dailyGoal.id);

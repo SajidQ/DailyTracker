@@ -16,13 +16,17 @@ DailyTracker is an online planning dashboard for tracking days by half-hours and
 <li><del>Grab all the tasks from the DailyTracker and show on the hourly today list.</del> 3/5/17</li>
 <li> Grab tasks from other calendars and layer it on top of hourly today list. </li>
 <li> Show on timeline</li>
-<li>Add hidden Daily goal event</li>
-<li>Load and show daily goals in goals section</li>
+<li><del>Add hidden Daily goal event</del> 3/7/17</li>
+<li><del>Load and show daily goals in goals section</del> 3/8/17</li>
+<li>Add routing for different pages and organize files</li>
+<li>Add signin permissions to routing </li> 
+<li> Revisit Objective</li>
+<li>Clean up DailyGoal</li>
 <li>Add hidden monthly goal event</li>
 <li>Load and show monthly goals in goals section</li>
 <li>Add hidden yearly goal event</li>
 <li>Load and show yearly goals in goals section</li>
-<li> Revisit Objective</li>
+
 </ul>
 
 
@@ -33,6 +37,9 @@ DailyTracker is an online planning dashboard for tracking days by half-hours and
 <li>Look in to using Google App Storage for goals and habit tracking</li>
 <li>Look into saving user emotions day by day? Or by hour? </li>
 <li>Look into connecting with Amazon for purchases? Or youTube watch history?</li>
+<li>Make a plan your month? </li>
+<li>Make a plan your week?</li>
+<li>Plan your year</li>
 </ul>
 
 
@@ -41,12 +48,13 @@ DailyTracker is an online planning dashboard for tracking days by half-hours and
 ### Week of 3/6/17
 3/6/17 - Added to do items related to showing the daily, monthly, and yearly goals.
 
+3/8/17 -
 Organization:
 HandleAPIInteraction: handles all communication with gapi?
 
 -checkDailyTrackerCalendarExists: actually checks if the DailyTracker calendar exists but should should it call getToday?
 
--getToday needs to be able to look through events for the day to check for the "DailyGoal" event since no other way to find that specific event through the api. How should the DailyGoal event summary be parsed? Right now it calls the 
+-getToday needs to be able to look through events for the day to check for the "DailyGoal" event since no other way to find that specific event through the api. How should the DailyGoal event summary be parsed? Right now it calls the
 
 -getFirstOfMonth: To create. This needs to be able get the first for any month, grab the habit and goal events
 
@@ -56,6 +64,9 @@ HandleAPIInteraction: handles all communication with gapi?
 HandleToday
 
 handleGoals: For All the goals?
+
+Need code clean up with routing. What is the objective with this app? Is it a one stop stop of managing goals?
+Working on adding routing and possibly around the whole
 
 ### Week of 2/27/17
 3/2/17 - It seems like a better idea to add a calendar labeled DailyTrackerJS so it doesn't interfere with other calendars the user has. In addition, it might be better to show a layering of the other tasks from the calendar?

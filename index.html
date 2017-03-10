@@ -18,7 +18,7 @@
 
   <!-- Angular -->
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
 
   <!-- My files -->
   <link rel="stylesheet" href="style.css">
@@ -32,11 +32,13 @@
   onreadystatechange="if (this.readyState === 'complete') this.onload()">
   </script>
 
-  <script src="script.js?v7" type="text/javascript"></script>
-  <script src="mainService.js?v7" type="text/javascript"></script>
+  <script src="script.js?v10" type="text/javascript"></script>
+  <script src="mainService.js?v10" type="text/javascript"></script>
+  <script src="controllers/mainCtrl.js" type="text/javascript"></script>
 </head>
 
 <body ng-controller="mainCtrl">
+  <!--
   <nav class="navbar navbar-inverse navbar-static-top" ng-hide="!initiatePage.data.signedIn">
     <div class="container">
       <div class="navbar-header">
@@ -49,68 +51,15 @@
       </ul>
       <button class="btn btn-danger navbar-btn" id="signout-button" style="display: none;">Sign Out</button>
     </div>
-  </nav>
+  </nav>--->
 
   <div class="container-fluid">
     <div class="page-wrapper">
-
-
-
-      <div id="introduction" ng-hide="initiatePage.data.signedIn">
-        <div class="jumbotron">
-
-          <h1>DailyTracker</h1>
-          <p>Welcome! Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in augue porttitor, pretium lacus a, blandit nisl. Phasellus vitae vestibulum dui. Praesent sed leo sit amet nisl pharetra aliquet eget ac est. Mauris eu dui sit amet orci lobortis maximus. Morbi vel tincidunt est, et cursus lacus. Ut nec turpis fermentum mi sodales bibendum. Proin tempor suscipit est vel dignissim. Fusce condimentum nibh lorem, ut tempus velit sodales eu. </p>
-          <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
-        </div>
-
-        <div class="row">
-          <div class="col-md-10 col-lg-10">
-            <button type="button" class="btn btn-primary btn-lg btn-block" id="authorize-button" style="display: none;">Authorize</button>
-          </div>
-        </div>
+      <div ng-view>
       </div>
     </div>
   </div>
-  <div id="signedIn" ng-hide="!initiatePage.data.signedIn">
-    <!--<button type="button" class="btn btn-primary" id="signout-button" style="display: none;">Sign Out</button>-->
-    <pre id="content"></pre>
 
-    <div class="col-sm-4 col-md-4 col-lg-4 nopadding">
-      <div class="panel panel-default" id="today">
-        <div class="panel-heading">
-          <h3 class="panel-title">Today</h3>
-        </div>
-        <div class="panel-body">
-
-            <div class="hours">
-              <div  ng-repeat="halfHour in handleHours.data.hours track by $index">
-                <div class="label">{{halfHour.hour+":"+halfHour.min}} {{halfHour.am ? "AM":"PM"}}</div>
-                <input class="hourInput" type="text" value="{{halfHour.task}}" ng-model="halfHour.task" ng-blur="handleHours.functions.addHour(halfHour.id)">
-            </div>
-            </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-4 col-md-4 col-lg-4 nopadding">
-      <div class="panel panel-default" id="dailyGoals">
-        <div class="panel-heading">
-          <h3 class="panel-title " style="width:100px; float:left; ">Daily Goals</h3>
-          <div class="btn-group" style="float:right; ">
-            <a href="javascript:void(0)"><span class="fa fa-pencil-square-o" aria-hidden="true" ></span></a>
-            <a href="javascript:void(0)" ><span class="fa fa-plus-square" aria-hidden="true"  ng-click="handleGoals.functions.addNewDailyGoal()"></span></a>
-          </div>
-        </div>
-        <div class="panel-body">
-          <div ng-repeat="goal in handleGoals.data.daily.list track by $index">
-            <div class="checkbox">
-              <input type="checkbox" value="" ng-checked="goal.complete==='true'"><input type="text" class="form-control" value="{{goal.task}}" ng-model="goal.task" ng-blur="handleGoals.functions.saveDailyGoals()">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
 </div>
 

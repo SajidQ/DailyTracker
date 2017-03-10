@@ -1,0 +1,38 @@
+<div id="signedIn">
+  <!--<button type="button" class="btn btn-primary" id="signout-button" style="display: none;">Sign Out</button>-->
+  <pre id="content"></pre>
+
+  <div class="col-sm-4 col-md-4 col-lg-4 nopadding">
+    <div class="panel panel-default" id="today">
+      <div class="panel-heading">
+        <h3 class="panel-title">Today</h3>
+      </div>
+      <div class="panel-body">
+
+          <div class="hours">
+            <div  ng-repeat="halfHour in handleHours.data.hours track by $index">
+              <div class="label">{{halfHour.hour+":"+halfHour.min}} {{halfHour.am ? "AM":"PM"}}</div>
+              <input class="hourInput" type="text" value="{{halfHour.task}}" ng-model="halfHour.task" ng-blur="handleHours.functions.addHour(halfHour.id)">
+          </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4 col-md-4 col-lg-4 nopadding">
+    <div class="panel panel-default" id="dailyGoals">
+      <div class="panel-heading">
+        <h3 class="panel-title " style="width:100px; float:left; ">Daily Goals</h3>
+        <div class="btn-group" style="float:right; ">
+          <a href="javascript:void(0)" ><span class="fa fa-plus-square" aria-hidden="true"  ng-click="handleGoals.functions.addNewDailyGoal()"></span></a>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div ng-repeat="goal in handleGoals.data.daily.list track by $index">
+          <div class="checkbox">
+            <input type="checkbox" value="" ng-checked="goal.complete==='true'"><input type="text" class="form-control" value="{{goal.task}}" ng-model="goal.task" ng-blur="handleGoals.functions.saveDailyGoals()">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
