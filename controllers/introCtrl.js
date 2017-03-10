@@ -1,5 +1,5 @@
 
-app.controller('introCtrl', function($scope,$location, $window, HandleToday, HandleAPIInteraction, HandleGoals) {
+app.controller('introCtrl', function($scope,$location, $window, HandleAPIInteraction) {
   /*$window.onload = function(){
     HandleAPIInteraction.handleClientLoad();
   }*/
@@ -10,9 +10,6 @@ app.controller('introCtrl', function($scope,$location, $window, HandleToday, Han
     //$scope.initiatePage.data.signoutButton = $('#signout-button');
   });
 
-  function getThis(){
-    return this;
-  }
 /*
   $scope.initiatePage = {
     data: {

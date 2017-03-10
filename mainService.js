@@ -70,18 +70,17 @@ app.service('HandleAPIInteraction', function($location, $rootScope){
 
   this.updateSigninStatus =  function(isSignedIn) {
     if (isSignedIn) {
-      $location.path( "/home" );
-      $rootScope.$apply();
       data.control.authorizeButton.css("display", "none");
       data.control.signoutButton.css("display", "block");;
       data.control.signedIn = true;
-      $scope.handleHours.functions.initiateHours();
-      HandleAPIInteraction.checkDailyTrackerCalendarExists($scope.handleHours.data.hours, $scope.handleGoals);
+
       //$scope.handleGoals.functions.initiateGoals();
-      $scope.$apply();
+      data.control.service.checkDailyTrackerCalendarExists();
+      $location.path( "/home" );
+      $rootScope.$apply();
     } else {
-      $scope.initiatePage.data.authorizeButton.css("display", "block");
-      $scope.initiatePage.data.signoutButton.css("display", "none");
+      data.control.authorizeButton.css("display", "block");
+      data.control.signoutButton.css("display", "none");
     }
   };
 
@@ -93,6 +92,36 @@ app.service('HandleAPIInteraction', function($location, $rootScope){
     data.api.gapi.auth2.getAuthInstance().signOut();
   };
 
+    //summary: gets list of calendars,
+    //check if 'DailyTracker' is one of the calendars
+    this.checkDailyTrackerCalendarExists= function(){
+      //get calendars
+        data.api.gapi.client.calendar.calendarList.list().then(function(response){
+          //look for DailyTracker
+          for(var i=0; i< response.result.items.length; i++){
+            if(response.result.items[i].summary==="DailyTracker"){
+              data.calendar.DailyTrackerCalendar = response.result.items[i].id;
+            }
+          }
+
+          //else create it
+          if(data.calendar.DailyTrackerCalendar==null){
+            calendar = {
+              'summary': 'DailyTracker'
+            }
+
+            //add DailyTracker as new calendar
+            data.api.gapi.client.calendar.calendars.insert(calendar).then(function(response){
+              data.calendar.DailyTrackerCalendar = response.result.id;
+              data.control.service.getToday(handleHoursPtr, handleGoals);
+            });
+          }
+          else{
+            data.control.service.getToday(handleHoursPtr, handleGoals);
+          }
+
+        });
+    };
 });
 
 app.service('HandleAPIInteraction2', function(GenericFunctions, $rootScope){
@@ -392,6 +421,7 @@ app.service('HandleAPIInteraction2', function(GenericFunctions, $rootScope){
 
 
 app.service('HandleToday', function(){
+
   this.initiateHours = function(){
     var hours = [];
     var min = "00";
