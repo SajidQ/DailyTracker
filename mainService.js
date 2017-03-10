@@ -6,7 +6,96 @@ app.service('GenericFunctions', function(){
   }
 });
 
-app.service('HandleAPIInteraction', function(GenericFunctions, $rootScope){
+app.service('HandleAPIInteraction', function($location, $rootScope){
+  var data = {
+    api:{
+      CLIENT_ID: '729784946085-pl50l2td2e4jjoadi0ad06cmesbujbno.apps.googleusercontent.com',
+      DISCOVERY_DOCS: ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"],
+      SCOPES: "https://www.googleapis.com/auth/calendar",
+      gapi:null
+    },
+    control:{
+      service: this,
+      signedIn:false,
+      authorizeButton: "",
+      signoutButton: ""
+    },
+    calendar:{
+      DailyTrackerCalendar: null,
+      controller:null,
+      today:null
+    }
+  };
+
+  this.setGapi = function(gapi){
+    data.api.gapi = gapi;
+    data.calendar.today = new Date();
+    data.control.service = this;
+  };
+
+  this.handleClientLoad = function() {
+    gapi.load('client:auth2', data.control.service.initClient);
+
+    data.control.service.setGapi(gapi);
+  };
+
+  this.setButtons = function(authorBtn, signOutBtn){
+    data.control.authorizeButton =authorBtn;
+    data.control.signoutButton =signOutBtn;
+  };
+
+  this.initClient = function() {
+    data.api.gapi.client.init({
+      discoveryDocs: data.DISCOVERY_DOCS,
+      clientId: data.api.CLIENT_ID,
+      scope: data.api.SCOPES
+    }).then(function () {
+      // Listen for sign-in state changes.
+
+      data.api.gapi.auth2.getAuthInstance().isSignedIn.listen(data.control.service.updateSigninStatus);
+
+      // Handle the initial sign-in state.
+      data.control.service.updateSigninStatus(data.api.gapi.auth2.getAuthInstance().isSignedIn.get());
+
+      /////////////////////////////////////////////
+      //NEED TO FIX: replace with angular ng-click
+      $(data.control.authorizeButton).click(function() {
+        data.control.service.handleAuthClick();
+      });
+      $(data.control.signoutButton).click(function() {
+        data.control.service.handleSignoutClick();
+      });
+    });
+  };
+
+  this.updateSigninStatus =  function(isSignedIn) {
+    if (isSignedIn) {
+      $location.path( "/home" );
+      $rootScope.$apply();
+      data.control.authorizeButton.css("display", "none");
+      data.control.signoutButton.css("display", "block");;
+      data.control.signedIn = true;
+      $scope.handleHours.functions.initiateHours();
+      HandleAPIInteraction.checkDailyTrackerCalendarExists($scope.handleHours.data.hours, $scope.handleGoals);
+      //$scope.handleGoals.functions.initiateGoals();
+      $scope.$apply();
+    } else {
+      $scope.initiatePage.data.authorizeButton.css("display", "block");
+      $scope.initiatePage.data.signoutButton.css("display", "none");
+    }
+  };
+
+  this.handleAuthClick = function(event) {
+    data.api.gapi.auth2.getAuthInstance().signIn();
+  };
+
+  this.handleSignoutClick = function(event) {
+    data.api.gapi.auth2.getAuthInstance().signOut();
+  };
+
+});
+
+app.service('HandleAPIInteraction2', function(GenericFunctions, $rootScope){
   var data = {
     gapi:null,
     DailyTrackerCalendar: null,
@@ -15,10 +104,6 @@ app.service('HandleAPIInteraction', function(GenericFunctions, $rootScope){
     today:null
   };
 
-  this.setGapi = function(gapi){
-    data.gapi = gapi;
-    data.today = new Date();
-  };
 
   this.setThis = function(that){
     data.controller = that;

@@ -1,18 +1,19 @@
 
-app.controller('mainCtrl', function($scope,$location, $window, HandleToday, HandleAPIInteraction, HandleGoals) {
-  $window.onload = function(){
-    $scope.initiatePage.handleClientLoad();
-  }
+app.controller('introCtrl', function($scope,$location, $window, HandleToday, HandleAPIInteraction, HandleGoals) {
+  /*$window.onload = function(){
+    HandleAPIInteraction.handleClientLoad();
+  }*/
 
   angular.element(document).ready(function () {
-    $scope.initiatePage.data.authorizeButton = $('#authorize-button');
-    $scope.initiatePage.data.signoutButton = $('#signout-button');
+    HandleAPIInteraction.setButtons($('#authorize-button'), $('#signout-button'));
+    //$scope.initiatePage.data.authorizeButton = $('#authorize-button');
+    //$scope.initiatePage.data.signoutButton = $('#signout-button');
   });
 
   function getThis(){
     return this;
   }
-
+/*
   $scope.initiatePage = {
     data: {
       CLIENT_ID: '729784946085-pl50l2td2e4jjoadi0ad06cmesbujbno.apps.googleusercontent.com',
@@ -24,7 +25,7 @@ app.controller('mainCtrl', function($scope,$location, $window, HandleToday, Hand
     },
     handleClientLoad:function() {
       gapi.load('client:auth2', $scope.initiatePage.initClient);
-      HandleAPIInteraction.setGapi(gapi, this);
+      //HandleAPIInteraction.setGapi(gapi, this);
 
     },
     applyScope:function(){
@@ -146,5 +147,5 @@ app.controller('mainCtrl', function($scope,$location, $window, HandleToday, Hand
     }
 
   };
-
+*/
 });

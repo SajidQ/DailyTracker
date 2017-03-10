@@ -50,7 +50,7 @@ body{
   height: 40px !important;
 }
 
-span,header-icon{
+.header-icon{
   color: #fff !important;
 }
 

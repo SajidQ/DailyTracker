@@ -5,11 +5,11 @@ app.config(function($routeProvider) {
            // route for the home page
            .when('/', {
                templateUrl : 'pages/signin.html',
-               controller  : 'mainCtrl'
+               controller  : 'introCtrl'
            })
            .when('/home', {
                templateUrl : 'pages/home.html',
-               controller  : 'mainCtrl'
+               controller  : 'todayCtrl'
            })
 
            // route for the about page
@@ -24,3 +24,10 @@ app.config(function($routeProvider) {
                controller  : 'yearCtrl'
            });
    });
+
+
+app.controller("mainCtrl", function($window, HandleAPIInteraction){
+  $window.onload = function(){
+    HandleAPIInteraction.handleClientLoad();
+  }
+});
