@@ -1,10 +1,17 @@
 app.controller("todayCtrl", function($scope, HandleAPIInteraction, HandleToday, HandleGoals){
   angular.element(document).ready(function () {
-    $scope.$watch(HandleAPIInteraction.data.calendar.DailyTrackerCalendar, function () {
       $scope.handleHours.functions.initiateHours();
-    });
 
+      //if no calendar, wait for initialization to finish
+      if(HandleAPIInteraction.data.calendar.DailyTrackerCalendar===null){
+        $scope.$watch(HandleAPIInteraction.data.calendar.DailyTrackerCalendar, function () {
+            HandleAPIInteraction.getToday($scope.handleHours.data.hours, $scope.handleGoals);
 
+        });
+      }
+      else{
+          HandleAPIInteraction.getToday($scope.handleHours.data.hours, $scope.handleGoals);
+      }
   });
 
 
@@ -15,8 +22,6 @@ app.controller("todayCtrl", function($scope, HandleAPIInteraction, HandleToday, 
     functions:{
       initiateHours:function(){
         $scope.handleHours.data.hours=HandleToday.initiateHours();
-        HandleAPIInteraction.getToday($scope.handleHours.data.hours, $scope.handleGoals)
-
       },
       addHour:function(id){
         HandleAPIInteraction.updateHour($scope.handleHours.data.hours, id);
