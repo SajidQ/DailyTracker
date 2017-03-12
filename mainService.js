@@ -46,7 +46,7 @@ app.service('HandleAPIInteraction', function($location, $rootScope){
 
   this.initClient = function() {
     data.api.gapi.client.init({
-      discoveryDocs: data.DISCOVERY_DOCS,
+      discoveryDocs: data.api.DISCOVERY_DOCS,
       clientId: data.api.CLIENT_ID,
       scope: data.api.SCOPES
     }).then(function () {
@@ -75,9 +75,17 @@ app.service('HandleAPIInteraction', function($location, $rootScope){
       data.control.signedIn = true;
 
       //$scope.handleGoals.functions.initiateGoals();
-      data.control.service.checkDailyTrackerCalendarExists();
-      $location.path( "/home" );
-      $rootScope.$apply();
+      data.control.service.checkDailyTrackerCalendarExists().then(function(r){
+        if(r){
+          data.control.service.setGapi(data.api.gapi);
+          $location.path( "/home" );
+          $rootScope.$apply();
+        }
+        else{
+          alert("Something if wrong with your authorization. Could not access DailyTracker calendar. "+r);
+        }
+      });
+
     } else {
       data.control.authorizeButton.css("display", "block");
       data.control.signoutButton.css("display", "none");
@@ -92,36 +100,122 @@ app.service('HandleAPIInteraction', function($location, $rootScope){
     data.api.gapi.auth2.getAuthInstance().signOut();
   };
 
-    //summary: gets list of calendars,
-    //check if 'DailyTracker' is one of the calendars
-    this.checkDailyTrackerCalendarExists= function(){
+  //summary: gets list of calendars,
+  //check if 'DailyTracker' is one of the calendars
+  this.checkDailyTrackerCalendarExists= function(){
+    var promise = new Promise(function(resolve, reject){
       //get calendars
-        data.api.gapi.client.calendar.calendarList.list().then(function(response){
-          //look for DailyTracker
-          for(var i=0; i< response.result.items.length; i++){
-            if(response.result.items[i].summary==="DailyTracker"){
-              data.calendar.DailyTrackerCalendar = response.result.items[i].id;
+      data.api.gapi.client.calendar.calendarList.list().then(function(response){
+        //look for DailyTracker
+        for(var i=0; i< response.result.items.length; i++){
+          if(response.result.items[i].summary==="DailyTracker"){
+            data.calendar.DailyTrackerCalendar = response.result.items[i].id;
+          }
+        }
+
+        //else create it
+        if(data.calendar.DailyTrackerCalendar==null){
+          calendar = {
+            'summary': 'DailyTracker'
+          }
+
+          //add DailyTracker as new calendar
+          data.api.gapi.client.calendar.calendars.insert(calendar).then(function(response){
+            data.calendar.DailyTrackerCalendar = response.result.id;
+            resolve(true);
+          });
+        }
+        else{
+          resolve(true);
+        }
+
+      });
+    });
+    return promise;
+  };
+
+  //summary: get the list of event for today
+  this.getToday = function(handleHoursPtr, handleGoals){
+    var today = new Date();
+    today.setHours(0,0,0,0);
+    var tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(0,0,0,0);
+
+    (function(hoursPtr, handleGoals){
+      data.api.gapi.client.calendar.events.list({
+        'calendarId': data.DailyTrackerCalendar,
+        'timeMin': (today).toISOString(),
+        'timeMax': (tomorrow).toISOString(),
+        'showDeleted': false,
+        'singleEvents': true,
+        'maxResults': 100,
+        'orderBy': 'startTime'
+      }).then(function(response) {
+        var events = response.result.items;
+
+        var foundDailyGoal = false;
+        if (events.length > 0) {
+          for (i = 0; i < events.length; i++) {
+            var event = events[i];
+            if(event.summary.search("DailyGoal")===-1){
+              var startDate = new Date(event.start.dateTime);
+              var hour = startDate.getHours();
+              var min = startDate.getMinutes();
+
+              //after 6am
+              if(hour>=6){
+                var convHour = (hour-6)*2;
+                if(min===30)
+                convHour++;
+
+                if(convHour>=0 && convHour<hoursPtr.length){
+                  hoursPtr[convHour].task = event.summary;
+                  hoursPtr[convHour].eventID = event.id;
+                }
+
+                GenericFunctions.append(event.summary + ' (' + startDate + ')');
+              }
+            }
+            else{
+              foundDailyGoal = true;
+              handleGoals.data.daily.id = event.id;
+              //handleGoals.data.daily.raw = event.summary;
+              handleGoals.data.daily.list = handleGoals.functions.parseDailyGoal(event.summary);
+              GenericFunctions.append(event.summary + ' (' + startDate + ')');
             }
           }
+          $rootScope.$apply();
 
-          //else create it
-          if(data.calendar.DailyTrackerCalendar==null){
-            calendar = {
-              'summary': 'DailyTracker'
-            }
+        }
+        else {
+          GenericFunctions.append('No upcoming events found.');
+        }
 
-            //add DailyTracker as new calendar
-            data.api.gapi.client.calendar.calendars.insert(calendar).then(function(response){
-              data.calendar.DailyTrackerCalendar = response.result.id;
-              data.control.service.getToday(handleHoursPtr, handleGoals);
-            });
-          }
-          else{
-            data.control.service.getToday(handleHoursPtr, handleGoals);
-          }
+        //if no daily goal available, create empty item
+        if(!foundDailyGoal){
+          var endTime = today;
 
-        });
-    };
+          //endTime.setMinutes(today.getMinutes() + 20);
+          var event = {
+            'summary': "DailyGoal: ",
+            'location': '',
+            'start': {
+              'dateTime': (today).toISOString()
+            },
+            'end': {
+              'dateTime': (today).toISOString()
+            },
+            'transparency':'opaque'//'transparent'
+          };
+
+          handleGoals.data.daily.id = data.service.createNewEvent(event);
+          handleGoals.data.daily.list = [];
+        }
+      });
+
+    })(handleHoursPtr, handleGoals);
+  };
 });
 
 app.service('HandleAPIInteraction2', function(GenericFunctions, $rootScope){
@@ -140,22 +234,22 @@ app.service('HandleAPIInteraction2', function(GenericFunctions, $rootScope){
 
 
   this.createNewEvent = function(event){
-      return gapi.client.calendar.events.insert({
-          'calendarId': data.DailyTrackerCalendar,
-          'resource': event
-          }).then(function(response){
-              return response.result.id;
-        });
+    return gapi.client.calendar.events.insert({
+      'calendarId': data.DailyTrackerCalendar,
+      'resource': event
+    }).then(function(response){
+      return response.result.id;
+    });
   };
 
   this.updateEvent = function(event, eventID){
-      return gapi.client.calendar.events.update({
-          'calendarId': data.DailyTrackerCalendar,
-          'eventId':eventID,
-          'resource': event
-          }).then(function(response){
-              return response.result;
-        });
+    return gapi.client.calendar.events.update({
+      'calendarId': data.DailyTrackerCalendar,
+      'eventId':eventID,
+      'resource': event
+    }).then(function(response){
+      return response.result;
+    });
   };
 
   //summary: gets list of calendars,
@@ -227,7 +321,7 @@ app.service('HandleAPIInteraction2', function(GenericFunctions, $rootScope){
               if(hour>=6){
                 var convHour = (hour-6)*2;
                 if(min===30)
-                  convHour++;
+                convHour++;
 
                 if(convHour>=0 && convHour<hoursPtr.length){
                   hoursPtr[convHour].task = event.summary;
@@ -337,7 +431,7 @@ app.service('HandleAPIInteraction2', function(GenericFunctions, $rootScope){
     var newItem = hoursList[id];
 
     if(newItem.task==="")
-      return;
+    return;
 
     //calculate hours
     var year = today.getFullYear();
@@ -360,10 +454,10 @@ app.service('HandleAPIInteraction2', function(GenericFunctions, $rootScope){
     }
 
     if(hour<10)
-      hour = "0"+hour;
+    hour = "0"+hour;
 
     if(endHour<10)
-      endHour = "0"+endHour;
+    endHour = "0"+endHour;
 
     var start = year+"-"+month+"-"+day+"T"+hour+":"+min+":00-"+zone;
     var end = year+"-"+month+"-"+day+"T"+endHour+":"+endMin+":00-"+zone;
@@ -387,8 +481,8 @@ app.service('HandleAPIInteraction2', function(GenericFunctions, $rootScope){
         gapi.client.calendar.events.insert({
           'calendarId': data.DailyTrackerCalendar,
           'resource': event
-          }).then(function(response){
-              hoursList[id].eventID = response.result.id;
+        }).then(function(response){
+          hoursList[id].eventID = response.result.id;
         });
       })(hoursList,id);
     }
@@ -408,7 +502,7 @@ app.service('HandleAPIInteraction2', function(GenericFunctions, $rootScope){
         'calendarId': data.DailyTrackerCalendar,
         'eventId':newItem.eventID,
         'resource': event
-        }).then(function(response){
+      }).then(function(response){
 
       });
     }
@@ -416,7 +510,7 @@ app.service('HandleAPIInteraction2', function(GenericFunctions, $rootScope){
   };
 
 
-//end of service
+  //end of service
 });
 
 

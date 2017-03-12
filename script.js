@@ -28,6 +28,8 @@ app.config(function($routeProvider) {
 
 app.controller("mainCtrl", function($window, HandleAPIInteraction){
   $window.onload = function(){
-    HandleAPIInteraction.handleClientLoad();
+      HandleAPIInteraction.setButtons($('#authorize-button'), $('#signout-button'));
+      HandleAPIInteraction.handleClientLoad();
+      //gapi.load('client:auth2', initClient);
   }
 });
