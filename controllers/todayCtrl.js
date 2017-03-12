@@ -1,4 +1,4 @@
-app.controller("todayCtrl", function($scope, HandleAPIInteraction, HandleToday){
+app.controller("todayCtrl", function($scope, HandleAPIInteraction, HandleToday, HandleGoals){
   angular.element(document).ready(function () {
     $scope.$watch(HandleAPIInteraction.data.calendar.DailyTrackerCalendar, function () {
       $scope.handleHours.functions.initiateHours();
@@ -19,7 +19,7 @@ app.controller("todayCtrl", function($scope, HandleAPIInteraction, HandleToday){
 
       },
       addHour:function(id){
-        //HandleAPIInteraction.updateHour($scope.handleHours.data.hours, id);
+        HandleAPIInteraction.updateHour($scope.handleHours.data.hours, id);
       }
     }
   };
