@@ -1,6 +1,9 @@
 app.controller("todayCtrl", function($scope, HandleAPIInteraction, HandleToday){
   angular.element(document).ready(function () {
-    $scope.handleHours.functions.initiateHours();
+    $scope.$watch(HandleAPIInteraction.data.calendar.DailyTrackerCalendar, function () {
+      $scope.handleHours.functions.initiateHours();
+    });
+
 
   });
 

@@ -6,8 +6,9 @@ app.service('GenericFunctions', function(){
   }
 });
 
-app.service('HandleAPIInteraction', function($location, $rootScope){
-  var data = {
+app.service('HandleAPIInteraction', function($location, $rootScope, GenericFunctions){
+  var selfPtr=null;
+  this.data = {
     api:{
       CLIENT_ID: '729784946085-pl50l2td2e4jjoadi0ad06cmesbujbno.apps.googleusercontent.com',
       DISCOVERY_DOCS: ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"],
@@ -28,56 +29,60 @@ app.service('HandleAPIInteraction', function($location, $rootScope){
   };
 
   this.setGapi = function(gapi){
-    data.api.gapi = gapi;
-    data.calendar.today = new Date();
-    data.control.service = this;
+    selfPtr.data.api.gapi = gapi;
+    selfPtr.data.calendar.today = new Date();
+  };
+
+  this.saveThis = function(){
+    selfPtr = this;
   };
 
   this.handleClientLoad = function() {
-    gapi.load('client:auth2', data.control.service.initClient);
+    this.saveThis();
+    gapi.load('client:auth2', selfPtr.initClient);
 
-    data.control.service.setGapi(gapi);
+    selfPtr.setGapi(gapi);
   };
 
   this.setButtons = function(authorBtn, signOutBtn){
-    data.control.authorizeButton =authorBtn;
-    data.control.signoutButton =signOutBtn;
+    this.data.control.authorizeButton =authorBtn;
+    this.data.control.signoutButton =signOutBtn;
   };
 
   this.initClient = function() {
-    data.api.gapi.client.init({
-      discoveryDocs: data.api.DISCOVERY_DOCS,
-      clientId: data.api.CLIENT_ID,
-      scope: data.api.SCOPES
+    selfPtr.data.api.gapi.client.init({
+      discoveryDocs: selfPtr.data.api.DISCOVERY_DOCS,
+      clientId: selfPtr.data.api.CLIENT_ID,
+      scope: selfPtr.data.api.SCOPES
     }).then(function () {
       // Listen for sign-in state changes.
 
-      data.api.gapi.auth2.getAuthInstance().isSignedIn.listen(data.control.service.updateSigninStatus);
+      selfPtr.data.api.gapi.auth2.getAuthInstance().isSignedIn.listen(selfPtr.updateSigninStatus);
 
       // Handle the initial sign-in state.
-      data.control.service.updateSigninStatus(data.api.gapi.auth2.getAuthInstance().isSignedIn.get());
+      selfPtr.updateSigninStatus(selfPtr.data.api.gapi.auth2.getAuthInstance().isSignedIn.get());
 
       /////////////////////////////////////////////
       //NEED TO FIX: replace with angular ng-click
-      $(data.control.authorizeButton).click(function() {
-        data.control.service.handleAuthClick();
+      $(selfPtr.data.control.authorizeButton).click(function() {
+        selfPtr.handleAuthClick();
       });
-      $(data.control.signoutButton).click(function() {
-        data.control.service.handleSignoutClick();
+      $(selfPtr.data.control.signoutButton).click(function() {
+        selfPtr.handleSignoutClick();
       });
     });
   };
 
   this.updateSigninStatus =  function(isSignedIn) {
     if (isSignedIn) {
-      data.control.authorizeButton.css("display", "none");
-      data.control.signoutButton.css("display", "block");;
-      data.control.signedIn = true;
+      selfPtr.data.control.authorizeButton.css("display", "none");
+      selfPtr.data.control.signoutButton.css("display", "block");;
+      selfPtr.data.control.signedIn = true;
 
       //$scope.handleGoals.functions.initiateGoals();
-      data.control.service.checkDailyTrackerCalendarExists().then(function(r){
+      this.checkDailyTrackerCalendarExists().then(function(r){
         if(r){
-          data.control.service.setGapi(data.api.gapi);
+          selfPtr.setGapi(selfPtr.data.api.gapi);
           $location.path( "/home" );
           $rootScope.$apply();
         }
@@ -87,17 +92,17 @@ app.service('HandleAPIInteraction', function($location, $rootScope){
       });
 
     } else {
-      data.control.authorizeButton.css("display", "block");
-      data.control.signoutButton.css("display", "none");
+      selfPtr.data.control.authorizeButton.css("display", "block");
+      selfPtr.data.control.signoutButton.css("display", "none");
     }
   };
 
   this.handleAuthClick = function(event) {
-    data.api.gapi.auth2.getAuthInstance().signIn();
+    selfPtr.data.api.gapi.auth2.getAuthInstance().signIn();
   };
 
   this.handleSignoutClick = function(event) {
-    data.api.gapi.auth2.getAuthInstance().signOut();
+    selfPtr.data.api.gapi.auth2.getAuthInstance().signOut();
   };
 
   //summary: gets list of calendars,
@@ -105,23 +110,23 @@ app.service('HandleAPIInteraction', function($location, $rootScope){
   this.checkDailyTrackerCalendarExists= function(){
     var promise = new Promise(function(resolve, reject){
       //get calendars
-      data.api.gapi.client.calendar.calendarList.list().then(function(response){
+      selfPtr.data.api.gapi.client.calendar.calendarList.list().then(function(response){
         //look for DailyTracker
         for(var i=0; i< response.result.items.length; i++){
           if(response.result.items[i].summary==="DailyTracker"){
-            data.calendar.DailyTrackerCalendar = response.result.items[i].id;
+            selfPtr.data.calendar.DailyTrackerCalendar = response.result.items[i].id;
           }
         }
 
         //else create it
-        if(data.calendar.DailyTrackerCalendar==null){
+        if(selfPtr.data.calendar.DailyTrackerCalendar==null){
           calendar = {
             'summary': 'DailyTracker'
           }
 
           //add DailyTracker as new calendar
-          data.api.gapi.client.calendar.calendars.insert(calendar).then(function(response){
-            data.calendar.DailyTrackerCalendar = response.result.id;
+          selfPtr.data.api.gapi.client.calendar.calendars.insert(calendar).then(function(response){
+            selfPtr.data.calendar.DailyTrackerCalendar = response.result.id;
             resolve(true);
           });
         }
@@ -143,8 +148,8 @@ app.service('HandleAPIInteraction', function($location, $rootScope){
     tomorrow.setHours(0,0,0,0);
 
     (function(hoursPtr, handleGoals){
-      data.api.gapi.client.calendar.events.list({
-        'calendarId': data.DailyTrackerCalendar,
+      selfPtr.data.api.gapi.client.calendar.events.list({
+        'calendarId': selfPtr.data.calendar.DailyTrackerCalendar,
         'timeMin': (today).toISOString(),
         'timeMax': (tomorrow).toISOString(),
         'showDeleted': false,
