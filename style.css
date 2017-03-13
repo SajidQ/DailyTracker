@@ -14,9 +14,9 @@ body{
   padding: 0;
   margin: 0 auto !important;
   width:95% !important;
-  max-width: 1300px;
+  max-width: 1400px;
   height:100% !important;
-  min-height: 800px; 
+  min-height: 800px;
 }
 
 #signedIn{
@@ -47,7 +47,7 @@ body{
 }
 
 .panel-heading{
-  height: 40px !important;
+  height: 120px !important;
 }
 
 .header-icon{

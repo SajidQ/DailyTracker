@@ -7,8 +7,8 @@ app.config(function($routeProvider) {
                templateUrl : 'pages/signin.html',
                controller  : 'introCtrl'
            })
-           .when('/home', {
-               templateUrl : 'pages/home.html',
+           .when('/today', {
+               templateUrl : 'pages/today.html',
                controller  : 'todayCtrl'
            })
 

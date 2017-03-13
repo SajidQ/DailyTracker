@@ -6,11 +6,12 @@ app.controller("todayCtrl", function($scope, HandleAPIInteraction, HandleToday, 
       if(HandleAPIInteraction.data.calendar.DailyTrackerCalendar===null){
         $scope.$watch(HandleAPIInteraction.data.calendar.DailyTrackerCalendar, function () {
             HandleAPIInteraction.getToday($scope.handleHours.data.hours, $scope.handleGoals);
-
+            $scope.handleGoals.functions.initiateGoals();
         });
       }
       else{
           HandleAPIInteraction.getToday($scope.handleHours.data.hours, $scope.handleGoals);
+          $scope.handleGoals.functions.initiateGoals();
       }
   });
 
@@ -44,6 +45,9 @@ app.controller("todayCtrl", function($scope, HandleAPIInteraction, HandleToday, 
           HandleAPIInteraction.getFirstOfMonth($scope.handleGoals);
 
           //check for yearly goal
+          HandleAPIInteraction.getFirstOfYear($scope.handleGoals).then(function(r){
+
+          });
         },
         addYearGoal:function(){
 
