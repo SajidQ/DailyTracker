@@ -80,11 +80,14 @@ app.service('HandleAPIInteraction', function($location, $rootScope, GenericFunct
       selfPtr.data.control.signedIn = true;
 
       //$scope.handleGoals.functions.initiateGoals();
-      this.checkDailyTrackerCalendarExists().then(function(r){
+      selfPtr.checkDailyTrackerCalendarExists().then(function(r){
         if(r){
           //selfPtr.setGapi(selfPtr.data.api.gapi);
-          $location.path( "/today" );
+          if($location.path()==="/"){
+            $location.path( "/today" );
+          }
           $rootScope.$apply();
+
         }
         else{
           alert("Something if wrong with your authorization. Could not access DailyTracker calendar. "+r);
@@ -208,7 +211,7 @@ app.service('HandleAPIInteraction', function($location, $rootScope, GenericFunct
               foundDailyGoal = true;
               handleGoals.data.daily.id = event.id;
               //handleGoals.data.daily.raw = event.summary;
-              handleGoals.data.daily.list = handleGoals.functions.parseDailyGoal(event.summary);
+              handleGoals.data.daily.list = selfPtr.parseGoalsList(event.summary, "DailyGoal: ");
               GenericFunctions.append(event.summary + ' (' + startDate + ')');
             }
           }
@@ -244,6 +247,8 @@ app.service('HandleAPIInteraction', function($location, $rootScope, GenericFunct
     })(handleHoursPtr, handleGoals);
   };
 
+
+
   this.getFirstOfYear = function(){
     var today = new Date();
     var firstday = new Date(today.getFullYear(), 0, 1);
@@ -272,7 +277,7 @@ app.service('HandleAPIInteraction', function($location, $rootScope, GenericFunct
             if(event.summary.search("YearGoal")!==-1){
               foundYearGoal = true;
 
-              resolve({id:event.id, list:handleGoals.functions.parseGoalsList(event.summary)});
+              resolve({id:event.id, list:selfPtr.parseGoalsList(event.summary, "YearGoal: ")});
               break;
             }
           }
@@ -331,7 +336,7 @@ app.service('HandleAPIInteraction', function($location, $rootScope, GenericFunct
             if(event.summary.search("MonthGoal")!==-1){
               foundDailyGoal = true;
               handleGoals.data.monthly.id = event.id;
-              handleGoals.data.monthly.list = handleGoals.functions.parseGoalsList(event.summary);
+              handleGoals.data.monthly.list = selfPtr.parseGoalsList(event.summary, "DailyGoal: ");
               break;
             }
           }
@@ -358,6 +363,72 @@ app.service('HandleAPIInteraction', function($location, $rootScope, GenericFunct
 
     })(handleGoals);
   };
+
+
+  this.getGoalEvent = function(type){
+    var today = new Date();
+    today.setHours(0,0,0,0);
+    var firstday = new Date(today.getFullYear(), today.getMonth(), 1);
+    if(type==="YearGoal")
+      firstday = new Date(today.getFullYear(), 0, 1);
+    firstday.setHours(0,0,0,0);
+
+    var twentyMinutesLater = new Date(today.getFullYear(), firstday.getMonth(), 1);
+    twentyMinutesLater.setMinutes(twentyMinutesLater.getMinutes() + 20);
+
+    var promise = new Promise(function(resolve, reject){
+
+      selfPtr.data.api.gapi.client.calendar.events.list({
+        'calendarId': selfPtr.data.calendar.DailyTrackerCalendar,
+        'timeMin': (firstday).toISOString(),
+        'timeMax': (twentyMinutesLater).toISOString(),
+        'showDeleted': false,
+        'singleEvents': true,
+        'maxResults': 10,
+        'orderBy': 'startTime'
+      }).then(function(response) {
+        var events = response.result.items;
+
+        var foundYearGoal = false;
+        if (events.length > 0) {
+          for (i = 0; i < events.length; i++) {
+            var event = events[i];
+            if(event.summary.search(type)!==-1){
+              foundYearGoal = true;
+
+              resolve({id:event.id, list:selfPtr.parseGoalsList(event.summary, "YearGoal: ")});
+              break;
+            }
+          }
+        }
+
+        //if no daily goal available, create empty item
+        if(!foundYearGoal){
+          var event = {
+            'summary': type+": ",
+            'location': '',
+            'start': {
+              'dateTime': (firstday).toISOString()
+            },
+            'end': {
+              'dateTime': (firstday).toISOString()
+            },
+            'transparency':'opaque'//'transparent'
+          };
+
+          selfPtr.createNewEvent(event).then(function(id){
+              resolve({id:id, list:[]});
+          });
+
+        }
+      });
+
+    });
+
+    return promise;
+  };
+
+
 
   //summary used to add user's input to the calendar
   this.updateHour = function(hoursList, id){
@@ -465,6 +536,27 @@ app.service('HandleAPIInteraction', function($location, $rootScope, GenericFunct
 
     HandleAPIInteraction.updateEvent(event, dailyGoal.id);
   };
+
+  this.parseGoalsList = function(input, type){
+    var eraseStrLen = (type).length;
+    var newInput = input.substring(eraseStrLen);
+
+    var list =  newInput.split(";;;");
+    var parsedList = [];
+
+    for(var i=0; i<list.length; i++){
+      if(list[i]!==""){
+        var splitItem = list[i].split(":::");
+        var task = {
+          task: splitItem[0],
+          complete:splitItem[1]
+        };
+        parsedList.push(task);
+      }
+    }
+
+    return parsedList;
+  };
 });
 
 app.service('HandleToday', function(){
@@ -514,26 +606,7 @@ app.service('HandleToday', function(){
 
 app.service('HandleGoals', function(HandleAPIInteraction){
 
-  this.parseGoalsList = function(input, type){
-    var eraseStrLen = (type).length;
-    var newInput = input.substring(eraseStrLen);
 
-    var list =  newInput.split(";;;");
-    var parsedList = [];
-
-    for(var i=0; i<list.length; i++){
-      if(list[i]!==""){
-        var splitItem = list[i].split(":::");
-        var task = {
-          task: splitItem[0],
-          complete:splitItem[1]
-        };
-        parsedList.push(task);
-      }
-    }
-
-    return parsedList;
-  };
 
   this.saveDailyGoal = function(dailyGoal){
     //update the goal

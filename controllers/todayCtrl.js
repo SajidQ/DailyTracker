@@ -1,4 +1,4 @@
-app.controller("todayCtrl", function($scope, HandleAPIInteraction, HandleToday, HandleGoals){
+app.controller("todayCtrl", function($scope, HandleAPIInteraction, HandleToday, HandleGoals, HandleYearGoals){
   angular.element(document).ready(function () {
       $scope.handleHours.functions.initiateHours();
 
@@ -67,9 +67,7 @@ app.controller("todayCtrl", function($scope, HandleAPIInteraction, HandleToday, 
         getWeeklyGoal:function(){
 
         },
-        parseDailyGoal:function(input){
-          return HandleGoals.parseGoalsList(input, "DailyGoal: ");
-        },
+
         addNewDailyGoal:function(){
           if($scope.handleGoals.data.daily.list.length<21){
             $scope.handleGoals.data.daily.list.push({

@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html ng-app="DailyTracker">
 <head>
-  <meta http-equiv=”Pragma” content=”no-cache”>
-  <meta http-equiv=”Expires” content=”-1″>
-  <meta http-equiv=”CACHE-CONTROL” content=”NO-CACHE”>
+  <meta http-equiv="cache-control" content="max-age=0" />
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+<meta http-equiv="pragma" content="no-cache" />
 
   <title>DailyTracker</title>
 
@@ -32,10 +34,16 @@
   onreadystatechange="if (this.readyState === 'complete') this.onload()">
   </script>
 
-  <script src="script.js?v12" type="text/javascript"></script>
-  <script src="mainService.js?v13" type="text/javascript"></script>
-  <script src="controllers/introCtrl.js?v2" type="text/javascript"></script>
-  <script src="controllers/todayCtrl.js?v7" type="text/javascript"></script>
+  <script src="script.js?v16" type="text/javascript"></script>
+
+  <!--controllers-->
+  <script src="mainService.js?v17" type="text/javascript"></script>
+  <script src="controllers/introCtrl.js?v16" type="text/javascript"></script>
+  <script src="controllers/todayCtrl.js?v16" type="text/javascript"></script>
+  <script src="controllers/yearCtrl.js?v17" type="text/javascript"></script>
+
+  <!--Services-->
+  <script src="services/yearService.js?v1" type="text/javascript"></script>
 </head>
 
 <body ng-controller="mainCtrl">
@@ -46,8 +54,8 @@
         <a class="navbar-brand" href="#">DailyTracker</a>
       </div>
       <ul class="nav navbar-nav">
-        <li class="active"><a href="/Today">Today</a></li>
-        <li><a href="/month">Month</a></li>
+        <li class="active"><a href="#/today">Today</a></li>
+        <li><a href="#/month">Month</a></li>
         <li><a href="/year">Year</a></li>
       </ul>
       <button class="btn btn-danger navbar-btn" id="signout-button" style="display: none;">Sign Out</button>
