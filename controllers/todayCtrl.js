@@ -5,13 +5,11 @@ app.controller("todayCtrl", function($scope, HandleAPIInteraction, HandleToday, 
       //if no calendar, wait for initialization to finish
       if(HandleAPIInteraction.data.calendar.DailyTrackerCalendar===null){
         $scope.$watch(HandleAPIInteraction.data.calendar.DailyTrackerCalendar, function () {
-            HandleAPIInteraction.getToday($scope.handleHours.data.hours, $scope.handleGoals);
-            $scope.handleGoals.functions.initiateGoals();
+            $scope.handleHours.functions.initializePage();
         });
       }
       else{
-          HandleAPIInteraction.getToday($scope.handleHours.data.hours, $scope.handleGoals);
-          $scope.handleGoals.functions.initiateGoals();
+          $scope.handleHours.functions.initializePage();
       }
   });
 
@@ -21,6 +19,15 @@ app.controller("todayCtrl", function($scope, HandleAPIInteraction, HandleToday, 
       hours:[]
     },
     functions:{
+      initializePage:function(){
+        HandleAPIInteraction.getToday($scope.handleHours.data.hours, $scope.handleGoals);
+        $scope.handleGoals.functions.initiateGoals();
+        HandleYearGoals.getYearInformation().then(function(r){
+          $scope.handleGoals.data.year = HandleYearGoals.data.yearGoal;
+          $scope.$apply();
+        });
+        
+      },
       initiateHours:function(){
         $scope.handleHours.data.hours=HandleToday.initiateHours();
       },
@@ -33,7 +40,7 @@ app.controller("todayCtrl", function($scope, HandleAPIInteraction, HandleToday, 
 
     $scope.handleGoals = {
       data:{
-        yearly:[],
+        year:{id:null, list:[]},
         monthly:{id:null, list:[]},
         weekly:[],
         daily:{id:null, list:[]}

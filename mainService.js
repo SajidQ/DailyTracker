@@ -365,10 +365,10 @@ app.service('HandleAPIInteraction', function($location, $rootScope, GenericFunct
   };
 
 
-  this.getGoalEvent = function(type){
+  this.getGoalEvent = function(type, month){
     var today = new Date();
     today.setHours(0,0,0,0);
-    var firstday = new Date(today.getFullYear(), today.getMonth(), 1);
+    var firstday = new Date(today.getFullYear(), month, 1);
     if(type==="YearGoal")
       firstday = new Date(today.getFullYear(), 0, 1);
     firstday.setHours(0,0,0,0);
