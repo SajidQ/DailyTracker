@@ -57,10 +57,10 @@ app.service('HandleYearGoals', function(HandleAPIInteraction){
     return promise;
   };
 
-  this.saveGoals = function(type){
+  this.saveGoals = function(type, month){
     var today = new Date();
     today.setHours(0,0,0,0);
-    var firstday = new Date(today.getFullYear(), today.getMonth(), 1);
+    var firstday = new Date(today.getFullYear(), month, 1);
 
     var rawStr = type+": ";
     var listPtr = null;
@@ -69,7 +69,9 @@ app.service('HandleYearGoals', function(HandleAPIInteraction){
       firstday = new Date(today.getFullYear(), 0, 1);
       listPtr = selfPtr.data.yearGoal;
     }
-
+    else{
+      listPtr = selfPtr.data.months[month];
+    }
     for(var i=0; i<listPtr.list.length;i++){
       var small = listPtr.list[i].task+":::"+listPtr.list[i].complete+";;;";
       rawStr+=small;

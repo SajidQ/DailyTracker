@@ -41,11 +41,25 @@ app.controller("yearCtrl", function($scope,HandleAPIInteraction, HandleYearGoals
           });
         }
         else{
-          alert("Only 20 daily goals allowed!");
+          alert("Only 10 year goals allowed!");
         }
       },
       saveYearGoals:function(){
         HandleYearGoals.saveGoals("YearGoal");
+      },
+      addMonthGoals:function(month){
+        if($scope.handleYearGoal.data.months[month].data.list.length<50){
+          $scope.handleYearGoal.data.months[month].data.list.push({
+            task: "",
+            complete:false
+          });
+        }
+        else{
+          alert("Only 50 daily goals allowed!");
+        }
+      },
+      saveMonthGoals:function(month){
+        HandleYearGoals.saveGoals("MonthGoal", month);
       }
     }
   }
