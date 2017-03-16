@@ -64,7 +64,7 @@
         </div>
       </div>
       <div class="panel-body">
-        <div ng-repeat="goal in handleGoals.data.daily.list track by $index">
+        <div ng-repeat="goal in handleGoals.data.month.list track by $index">
           <div class="checkbox">
             <input type="checkbox" value="" ng-checked="goal.complete==='true'"><input type="text" class="form-control" value="{{goal.task}}" ng-model="goal.task" ng-blur="handleGoals.functions.saveDailyGoals()">
           </div>

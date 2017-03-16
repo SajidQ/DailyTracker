@@ -26,7 +26,11 @@ app.controller("todayCtrl", function($scope, HandleAPIInteraction, HandleToday, 
           $scope.handleGoals.data.year = HandleYearGoals.data.yearGoal;
           $scope.$apply();
         });
-        
+
+        HandleToday.getThisMonthGoal().then(function(){
+          $scope.handleGoals.data.month = HandleToday.data.month;
+          $scope.$apply(); 
+        });
       },
       initiateHours:function(){
         $scope.handleHours.data.hours=HandleToday.initiateHours();
@@ -41,7 +45,7 @@ app.controller("todayCtrl", function($scope, HandleAPIInteraction, HandleToday, 
     $scope.handleGoals = {
       data:{
         year:{id:null, list:[]},
-        monthly:{id:null, list:[]},
+        month:{id:null, list:[]},
         weekly:[],
         daily:{id:null, list:[]}
       },
@@ -49,12 +53,6 @@ app.controller("todayCtrl", function($scope, HandleAPIInteraction, HandleToday, 
         initiateGoals:function(){
           //DailyGoal checked/initiated in HandleAPIInteraction.getToday()
           //check for monthly goals
-          HandleAPIInteraction.getFirstOfMonth($scope.handleGoals);
-
-          //check for yearly goal
-          HandleAPIInteraction.getFirstOfYear($scope.handleGoals).then(function(r){
-
-          });
         },
         addYearGoal:function(){
 

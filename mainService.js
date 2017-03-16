@@ -559,9 +559,21 @@ app.service('HandleAPIInteraction', function($location, $rootScope, GenericFunct
   };
 });
 
-app.service('HandleToday', function(){
+app.service('HandleToday', function(HandleAPIInteraction){
+  this.data={
+    yearGoal:{id:null, list:[]},
+    month:{id:null, list:[]}
+  };
+
+  var selfPtr = null;
+
+  this.getThis = function(){
+    selfPtr = this;
+  };
 
   this.initiateHours = function(){
+    this.getThis();
+
     var hours = [];
     var min = "00";
     var am = true;
@@ -600,13 +612,25 @@ app.service('HandleToday', function(){
 
     return hours;
   };
+
+  this.getThisMonthGoal = function(){
+    var promise = new Promise(function(resolve, reject) {
+      var today = new Date();
+      HandleAPIInteraction.getGoalEvent("MonthGoal", today.getMonth()).then(function(r){
+        selfPtr.data.month.id = r.id;
+        selfPtr.data.month.list = r.list;
+        resolve(true);
+      });
+    });
+
+    return promise;
+  };
+
 });
 
 
 
 app.service('HandleGoals', function(HandleAPIInteraction){
-
-
 
   this.saveDailyGoal = function(dailyGoal){
     //update the goal
