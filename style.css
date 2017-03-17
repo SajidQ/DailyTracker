@@ -118,8 +118,8 @@ body{
     background: -moz-linear-gradient(bottom right, #ED3EA3,#F68986, #FEC76C); /* For Firefox 3.6 to 15 */
     background: linear-gradient(to bottom right, #ED3EA3,#F68986, #FEC76C);
     width: 20%;
-    min-width: 200px;
-    height: 300px;
+    min-width: 250px;
+    height: 330px;
     margin: 10px;
     border-radius: 10px;
 }
@@ -138,13 +138,37 @@ body{
 }
 
 .month-item .item-body{
-  height: 230px;
+  height: 260px;
   background:transparent;
   padding: 10px;
 }
+.month-item .input-row{
+  width: 100%;
+  display: block;
+}
+
+.month-item .del{
+  width: 10%;
+  min-width: 20px;
+  float:right;
+  height: 30px;
+  padding-top: 5px;
+  text-align: center;
+}
 
 .month-item input{
-  width: 100% !important;
+  width: 90% !important;
+  background: transparent;
+  border: 0px;
+  border-bottom: 1px dashed #fec76c;
+  opacity: .7;
+  float:left;
+  height: 30px;
+}
+
+.month-item input:focus{
+  outline:0 !important;
+  outline-width: 0 !important;
 }
 
 .month-item .item-footer{
