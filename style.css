@@ -1,5 +1,5 @@
 body{
-  background-color: #e3e6ea !important;
+  background-color: #212A34 !important;
   color: #fff;
   padding: 0;
   margin: 0;
@@ -98,4 +98,60 @@ body{
 .hours input:focus{
   outline:0 !important;
   outline-width: 0 !important;
+}
+
+
+/*** YEAR PAGE***/
+.month-container{
+  display: -webkit-flex;
+ display: flex;
+ -webkit-flex-wrap: wrap;
+ flex-wrap: wrap;
+ height: 100%;
+
+}
+
+.month-item{
+    background-color: #F68986;
+    background: -webkit-linear-gradient(left top, #ED3EA3, #F68986, #FEC76C); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(bottom right, #ED3EA3,#F68986, #FEC76C); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(bottom right, #ED3EA3,#F68986, #FEC76C); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to bottom right, #ED3EA3,#F68986, #FEC76C);
+    width: 20%;
+    min-width: 200px;
+    height: 300px;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+.month-item .item-header{
+  height: 30px;
+  background:transparent;
+  text-align: center;
+  padding-top: 5px;
+  border-radius: 10px;
+  color:#9C0E60;
+  letter-spacing: 1px;
+  font-variant: small-caps;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.month-item .item-body{
+  height: 230px;
+  background:transparent;
+  padding: 10px;
+}
+
+.month-item input{
+  width: 100% !important;
+}
+
+.month-item .item-footer{
+  background: #fff;
+  height: 40px;
+  padding: 0 10px 0 10px;
+  border-top: 1px solid #e3e3e3;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }

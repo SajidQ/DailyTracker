@@ -545,7 +545,8 @@ app.service('HandleAPIInteraction', function($location, $rootScope, GenericFunct
     var parsedList = [];
 
     for(var i=0; i<list.length; i++){
-      if(list[i]!==""){
+      var temp = list[i].replace(/\s/g, '');
+      if(list[i]!=="" && temp.length>0){
         var splitItem = list[i].split(":::");
         var task = {
           task: splitItem[0],

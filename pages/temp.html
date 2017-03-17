@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="DailyTracker">
+<html>
 <head>
   <meta http-equiv="cache-control" content="max-age=0" />
 <meta http-equiv="cache-control" content="no-cache" />
@@ -23,7 +23,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
 
   <!-- My files -->
-  <link rel="stylesheet" href="style.css?v5">
+  <link rel="stylesheet" href="../style.css">
 
   <!-- Fonts-->
   <link rel="stylesheet" href="/includes/font-awesome/css/font-awesome.min.css">
@@ -64,27 +64,28 @@
 
   <div class="container-fluid">
     <div class="page-wrapper">
-
-      <div class="row">
-        <div class="col-md-2 col-lg-2">
-          <div class="panel panel-default" id="month">
-            <div class="panel-heading">
-              <h3 class="panel-title " style="width:200px; float:left; ">{{month}}</h3>
-              <div class="btn-group" style="float:right; ">
-                <a href="javascript:void(0)" ><span class="fa fa-plus-square" aria-hidden="true"  ng-click="handleYearGoal.functions.addYearGoal()"></span></a>
-              </div>
+      <div id="signedIn">
+        <div class="month-container">
+          <div class="month-item">
+            <div class="item-header">June</div>
+            <div class="item-body">
+            
+              <input type="text" value="Submit">
             </div>
-            <div class="panel-body">
-              <div ng-repeat="goal in handleYearGoal.data.months.data[month].list track by $index">
-                <div class="checkbox">
-                  <input type="checkbox" value="" ng-checked="goal.complete==='true'"><input type="text" class="form-control" value="{{goal.task}}" ng-model="goal.task" ng-blur="handleYearGoal.functions.saveYearGoals()">
-                </div>
-              </div>
-            </div>
+            <div class="item-footer">flex item 1</div>
+          </div>
+          <div class="month-item">
+            <div class="item-header">slim shaddy</div>
+            <div class="item-body">flex item 1</div>
+            <div class="item-footer">flex item 1</div>
+          </div>
+          <div class="month-item">
+            <div class="item-header">slim shaddy</div>
+            <div class="item-body">flex item 1</div>
+            <div class="item-footer">flex item 1</div>
           </div>
         </div>
-      </div>
-
+    </div>
     </div>
   </div>
 
