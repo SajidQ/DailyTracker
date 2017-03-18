@@ -48,8 +48,8 @@ app.controller("yearCtrl", function($scope,HandleAPIInteraction, HandleYearGoals
         HandleYearGoals.saveGoals("YearGoal");
       },
       addMonthGoals:function(month){
-        if($scope.handleYearGoal.data.months[month].data.list.length<50){
-          $scope.handleYearGoal.data.months[month].data.list.push({
+        if($scope.handleYearGoal.data.months.data[month].list.length<50){
+          $scope.handleYearGoal.data.months.data[month].list.push({
             task: "",
             complete:false
           });

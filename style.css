@@ -108,7 +108,16 @@ body{
  -webkit-flex-wrap: wrap;
  flex-wrap: wrap;
  height: 100%;
+ margin: auto;
+}
 
+.planner-container{
+  display: -webkit-flex;
+ display: flex;
+ -webkit-flex-wrap: wrap;
+ flex-wrap: wrap;
+ height: 400px;
+ margin: auto;
 }
 
 .month-item{
@@ -124,7 +133,21 @@ body{
     border-radius: 10px;
 }
 
-.month-item .item-header{
+.planner-item{
+  background-color: #F68986;
+  background: -webkit-linear-gradient(left top, #ED3EA3, #F68986, #FEC76C); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(bottom right, #ED3EA3,#F68986, #FEC76C); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(bottom right, #ED3EA3,#F68986, #FEC76C); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to bottom right, #ED3EA3,#F68986, #FEC76C);
+  width: 100%;
+  min-width: 300px;
+  height: 330px;
+  margin: 10px;
+  border-radius: 10px;
+}
+
+
+.item-header{
   height: 30px;
   background:transparent;
   text-align: center;
@@ -137,44 +160,67 @@ body{
   font-weight: 600;
 }
 
-.month-item .item-body{
+.item-body{
   height: 260px;
   background:transparent;
   padding: 10px;
 }
-.month-item .input-row{
+.input-row{
   width: 100%;
   display: block;
+  margin: 0;
+  padding: 0;
+  height: 30px;
 }
 
-.month-item .del{
+.del{
   width: 10%;
   min-width: 20px;
   float:right;
   height: 30px;
   padding-top: 5px;
-  text-align: center;
+  text-align: left;
 }
 
-.month-item input{
+.checkboxAndInput{
+  float: left;
   width: 90% !important;
+  height: 30px;
+}
+
+input.textBox{
+  width: 92% !important;
   background: transparent;
   border: 0px;
   border-bottom: 1px dashed #fec76c;
   opacity: .7;
   float:left;
   height: 30px;
+  margin-left: 5px;
 }
 
-.month-item input:focus{
+.planner-item input.textBox{
+  width: 93% !important;
+}
+
+input.checkbox{
+  width: 5% !important;
+  min-width: 10px;
+  background: transparent;
+  float:left;
+  height: 20px;
+  margin: 5px auto !important;
+}
+
+input:focus{
   outline:0 !important;
   outline-width: 0 !important;
 }
 
-.month-item .item-footer{
+.item-footer{
   background: #fff;
   height: 40px;
-  padding: 0 10px 0 10px;
+  padding: 10px 10px 0 10px;
   border-top: 1px solid #e3e3e3;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;

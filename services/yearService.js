@@ -2,18 +2,18 @@ app.service('HandleYearGoals', function(HandleAPIInteraction){
   this.data={
     yearGoal:{id:null, list:[]},
     months:{
-      0:{id:null, list:[]},
-      1:{id:null, list:[]},
-      2:{id:null, list:[]},
-      3:{id:null, list:[]},
-      4:{id:null, list:[]},
-      5:{id:null, list:[]},
-      6:{id:null, list:[]},
-      7:{id:null, list:[]},
-      8:{id:null, list:[]},
-      9:{id:null, list:[]},
-      10:{id:null, list:[]},
-      11:{id:null, list:[]}
+      0:{label:"January", id:null, list:[]},
+      1:{label:"February",id:null, list:[]},
+      2:{label:"March",id:null, list:[]},
+      3:{label:"April",id:null, list:[]},
+      4:{label:"May",id:null, list:[]},
+      5:{label:"June",id:null, list:[]},
+      6:{label:"July",id:null, list:[]},
+      7:{label:"August",id:null, list:[]},
+      8:{label:"September",id:null, list:[]},
+      9:{label:"October",id:null, list:[]},
+      10:{label:"November",id:null, list:[]},
+      11:{label:"December",id:null, list:[]}
     }
   };
 
