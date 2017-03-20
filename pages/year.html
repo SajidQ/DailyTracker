@@ -5,14 +5,14 @@
     <div class="planner-item">
       <div class="item-header">Plans for the year?</div>
       <div class="item-body">
-        <div class="input-row" ng-repeat="goal in handleYearGoal.data.yearGoal.list track by $index" ng-hide="handleYearGoal.data.yearGoal.list.length<1">
+        <div class="input-row" ng-repeat="goal in handleYearGoal.data.yearGoal.list.todo track by $index" ng-hide="handleYearGoal.data.yearGoal.list.todo.length<1">
           <div class="checkboxAndInput">
-            <input class="checkbox" type="checkbox" value="" ng-checked="goal.complete==='true'">
+            <input class="checkbox" type="checkbox" value="" ng-checked="goal.complete===true">
             <input class="textBox" type="text" value="{{goal.task}}" ng-model="goal.task" ng-blur="handleYearGoal.functions.saveYearGoals()">
           </div>
           <div class="del">X</div>
         </div>
-        <div ng-hide="handleYearGoal.data.yearGoal.list.length>0">
+        <div ng-hide="handleYearGoal.data.yearGoal.list.todo.length>0">
           No Enteries Found!! Click + to add. :)
         </div>
       </div>
@@ -68,11 +68,14 @@
     <div class="month-item" ng-repeat="month in handleYearGoal.data.months.count">
       <div class="item-header">{{handleYearGoal.data.months.data[month].label}}</div>
       <div class="item-body">
-        <div class="input-row" ng-repeat="goal in handleYearGoal.data.months.data[month].list track by $index">
+        <div class="input-row" ng-repeat="goal in handleYearGoal.data.months.data[month].list.todo track by $index"  ng-hide="handleYearGoal.data.months.data[month].list.todo.length<1">
             <div class="checkboxAndInput">
-            <input class="checkbox" type="checkbox" value="" ng-checked="goal.complete==='true'"><input class="textBox" type="text" value="{{goal.task}}" ng-model="goal.task" ng-blur="handleYearGoal.functions.saveMonthGoals(month)">
+            <input class="checkbox" type="checkbox" value="" ng-checked="goal.complete===true"><input class="textBox" type="text" value="{{goal.task}}" ng-model="goal.task" ng-blur="handleYearGoal.functions.saveMonthGoals(month)">
           </div>
           <div class="del">X</div>
+        </div>
+        <div ng-hide="handleYearGoal.data.months.data[month].list.todo.length>0">
+          No Enteries Found!! Click + to add. :)
         </div>
       </div>
       <div class="item-footer">

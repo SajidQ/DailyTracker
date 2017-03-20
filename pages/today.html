@@ -28,32 +28,15 @@
         </div>
       </div>
       <div class="panel-body">
-        <div ng-repeat="goal in handleGoals.data.daily.list track by $index">
+        <div ng-repeat="goal in handleGoals.data.daily.list.todo track by $index">
           <div class="checkbox">
-            <input type="checkbox" value="" ng-checked="goal.complete==='true'"><input type="text" class="form-control" value="{{goal.task}}" ng-model="goal.task" ng-blur="handleGoals.functions.saveDailyGoals()">
+            <input type="checkbox" value="" ng-checked="goal.complete===true"><input type="text" class="form-control" value="{{goal.task}}" ng-model="goal.task" ng-blur="handleGoals.functions.saveDailyGoals()">
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="col-md-4 col-lg-4">
-    <div class="panel panel-default" id="weeklyGoals">
-      <div class="panel-heading">
-        <h3 class="panel-title " style="width:100px; float:left; ">Monthly Goals</h3>
-        <div class="btn-group" style="float:right; ">
-          <a href="javascript:void(0)" ><span class="fa fa-plus-square" aria-hidden="true"  ng-click="handleGoals.functions.addNewDailyGoal()"></span></a>
-        </div>
-      </div>
-      <div class="panel-body">
-        <div ng-repeat="goal in handleGoals.data.daily.list track by $index">
-          <div class="checkbox">
-            <input type="checkbox" value="" ng-checked="goal.complete==='true'"><input type="text" class="form-control" value="{{goal.task}}" ng-model="goal.task" ng-blur="handleGoals.functions.saveDailyGoals()">
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <div class="col-md-4 col-lg-4">
     <div class="panel panel-default" id="monthlyGoals">
@@ -64,9 +47,9 @@
         </div>
       </div>
       <div class="panel-body">
-        <div ng-repeat="goal in handleGoals.data.month.list track by $index">
+        <div ng-repeat="goal in handleGoals.data.month.list.todo track by $index">
           <div class="checkbox">
-            <input type="checkbox" value="" ng-checked="goal.complete==='true'"><input type="text" class="form-control" value="{{goal.task}}" ng-model="goal.task" ng-blur="handleGoals.functions.saveDailyGoals()">
+            <input type="checkbox" value="" ng-checked="goal.complete===true"><input type="text" class="form-control" value="{{goal.task}}" ng-model="goal.task" ng-blur="handleGoals.functions.saveDailyGoals()">
           </div>
         </div>
       </div>
@@ -82,9 +65,9 @@
         </div>
       </div>
       <div class="panel-body">
-        <div ng-repeat="goal in handleGoals.data.year.list track by $index">
+        <div ng-repeat="goal in handleGoals.data.year.list.todo track by $index">
           <div class="checkbox">
-            <input type="checkbox" value="" ng-checked="goal.complete==='true'"><input type="text" class="form-control" value="{{goal.task}}" ng-model="goal.task" ng-blur="handleGoals.functions.saveDailyGoals()">
+            <input type="checkbox" value="" ng-checked="goal.complete===true"><input type="text" class="form-control" value="{{goal.task}}" ng-model="goal.task" ng-blur="handleGoals.functions.saveDailyGoals()">
           </div>
         </div>
       </div>

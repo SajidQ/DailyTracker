@@ -21,6 +21,7 @@ app.controller("todayCtrl", function($scope, HandleAPIInteraction, HandleToday, 
     functions:{
       initializePage:function(){
         HandleAPIInteraction.getToday($scope.handleHours.data.hours, $scope.handleGoals);
+        
         $scope.handleGoals.functions.initiateGoals();
         HandleYearGoals.getYearInformation().then(function(r){
           $scope.handleGoals.data.year = HandleYearGoals.data.yearGoal;
@@ -29,7 +30,7 @@ app.controller("todayCtrl", function($scope, HandleAPIInteraction, HandleToday, 
 
         HandleToday.getThisMonthGoal().then(function(){
           $scope.handleGoals.data.month = HandleToday.data.month;
-          $scope.$apply(); 
+          $scope.$apply();
         });
       },
       initiateHours:function(){
@@ -47,35 +48,17 @@ app.controller("todayCtrl", function($scope, HandleAPIInteraction, HandleToday, 
         year:{id:null, list:[]},
         month:{id:null, list:[]},
         weekly:[],
-        daily:{id:null, list:[]}
+        daily:{id:null, list:{}}
       },
       functions:{
         initiateGoals:function(){
           //DailyGoal checked/initiated in HandleAPIInteraction.getToday()
           //check for monthly goals
         },
-        addYearGoal:function(){
-
-        },
-        getYearGoal:function(){
-
-        },
-        addMonthlyGoal:function(){
-
-        },
-        getMonthlyGoal:function(){
-
-        },
-        addWeeklyGoal:function(){
-
-        },
-        getWeeklyGoal:function(){
-
-        },
 
         addNewDailyGoal:function(){
-          if($scope.handleGoals.data.daily.list.length<21){
-            $scope.handleGoals.data.daily.list.push({
+          if($scope.handleGoals.data.daily.list.todo.length<21){
+            $scope.handleGoals.data.daily.list.todo.push({
               task: "",
               complete:false
             });
@@ -85,7 +68,7 @@ app.controller("todayCtrl", function($scope, HandleAPIInteraction, HandleToday, 
           }
         },
         saveDailyGoals:function(){
-          HandleGoals.saveDailyGoal($scope.handleGoals.data.daily);
+          HandleToday.saveDailyGoal($scope.handleGoals.data.daily);
         }
       }
 

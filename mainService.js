@@ -211,7 +211,7 @@ app.service('HandleAPIInteraction', function($location, $rootScope, GenericFunct
               foundDailyGoal = true;
               handleGoals.data.daily.id = event.id;
               //handleGoals.data.daily.raw = event.summary;
-              handleGoals.data.daily.list = selfPtr.parseGoalsList(event.summary, "DailyGoal: ");
+              handleGoals.data.daily.list = selfPtr.parseGoalsList(event.summary);
               GenericFunctions.append(event.summary + ' (' + startDate + ')');
             }
           }
@@ -228,7 +228,7 @@ app.service('HandleAPIInteraction', function($location, $rootScope, GenericFunct
 
           //endTime.setMinutes(today.getMinutes() + 20);
           var event = {
-            'summary': "DailyGoal: ",
+            'summary': "'"+JSON.stringify({type: "DailyGoal", todo:[]})+"'",
             'location': '',
             'start': {
               'dateTime': (today).toISOString()
@@ -240,7 +240,7 @@ app.service('HandleAPIInteraction', function($location, $rootScope, GenericFunct
           };
 
           handleGoals.data.daily.id = selfPtr.createNewEvent(event);
-          handleGoals.data.daily.list = [];
+          handleGoals.data.daily.list = {type:type, todo:[]};
         }
       });
 
@@ -248,121 +248,6 @@ app.service('HandleAPIInteraction', function($location, $rootScope, GenericFunct
   };
 
 
-
-  this.getFirstOfYear = function(){
-    var today = new Date();
-    var firstday = new Date(today.getFullYear(), 0, 1);
-    firstday.setHours(0,0,0,0);
-
-    var twentyMinutesLater = new Date(today.getFullYear(), today.getMonth(), 1);
-    twentyMinutesLater.setMinutes(twentyMinutesLater.getMinutes() + 20);
-
-    var promise = new Promise(function(resolve, reject){
-
-      selfPtr.data.api.gapi.client.calendar.events.list({
-        'calendarId': selfPtr.data.calendar.DailyTrackerCalendar,
-        'timeMin': (firstday).toISOString(),
-        'timeMax': (twentyMinutesLater).toISOString(),
-        'showDeleted': false,
-        'singleEvents': true,
-        'maxResults': 10,
-        'orderBy': 'startTime'
-      }).then(function(response) {
-        var events = response.result.items;
-
-        var foundYearGoal = false;
-        if (events.length > 0) {
-          for (i = 0; i < events.length; i++) {
-            var event = events[i];
-            if(event.summary.search("YearGoal")!==-1){
-              foundYearGoal = true;
-
-              resolve({id:event.id, list:selfPtr.parseGoalsList(event.summary, "YearGoal: ")});
-              break;
-            }
-          }
-        }
-
-        //if no daily goal available, create empty item
-        if(!foundYearGoal){
-          var event = {
-            'summary': "YearGoal: ",
-            'location': '',
-            'start': {
-              'dateTime': (firstday).toISOString()
-            },
-            'end': {
-              'dateTime': (firstday).toISOString()
-            },
-            'transparency':'opaque'//'transparent'
-          };
-
-          selfPtr.createNewEvent(event).then(function(id){
-              resolve({id:id, list:[]});
-          });
-
-        }
-      });
-
-    });
-
-    return promise;
-  };
-
-  this.getFirstOfMonth = function(handleGoals){
-    var today = new Date();
-    today.setHours(0,0,0,0);
-    var firstday = new Date(today.getFullYear(), today.getMonth(), 1);
-
-    var twentyMinutesLater = new Date(today.getFullYear(), today.getMonth(), 1);
-    twentyMinutesLater.setMinutes(twentyMinutesLater.getMinutes() + 20);
-
-    (function(handleGoals){
-      selfPtr.data.api.gapi.client.calendar.events.list({
-        'calendarId': selfPtr.data.calendar.DailyTrackerCalendar,
-        'timeMin': (firstday).toISOString(),
-        'timeMax': (twentyMinutesLater).toISOString(),
-        'showDeleted': false,
-        'singleEvents': true,
-        'maxResults': 10,
-        'orderBy': 'startTime'
-      }).then(function(response) {
-        var events = response.result.items;
-
-        var foundMonthGoal = false;
-        if (events.length > 0) {
-          for (i = 0; i < events.length; i++) {
-            var event = events[i];
-            if(event.summary.search("MonthGoal")!==-1){
-              foundDailyGoal = true;
-              handleGoals.data.monthly.id = event.id;
-              handleGoals.data.monthly.list = selfPtr.parseGoalsList(event.summary, "DailyGoal: ");
-              break;
-            }
-          }
-        }
-
-        //if no daily goal available, create empty item
-        if(!foundMonthGoal){
-          var event = {
-            'summary': "MonthGoal: ",
-            'location': '',
-            'start': {
-              'dateTime': (firstday).toISOString()
-            },
-            'end': {
-              'dateTime': (firstday).toISOString()
-            },
-            'transparency':'opaque'//'transparent'
-          };
-
-          handleGoals.data.monthly.id = selfPtr.createNewEvent(event);
-          handleGoals.data.monthly.list = [];
-        }
-      });
-
-    })(handleGoals);
-  };
 
 
   this.getGoalEvent = function(type, month){
@@ -405,7 +290,7 @@ app.service('HandleAPIInteraction', function($location, $rootScope, GenericFunct
         //if no daily goal available, create empty item
         if(!foundYearGoal){
           var event = {
-            'summary': type+": ",
+            'summary': "'"+JSON.stringify({type: type, todo:[]})+"'",
             'location': '',
             'start': {
               'dateTime': (firstday).toISOString()
@@ -417,7 +302,7 @@ app.service('HandleAPIInteraction', function($location, $rootScope, GenericFunct
           };
 
           selfPtr.createNewEvent(event).then(function(id){
-              resolve({id:id, list:[]});
+              resolve({id:id, list:{type:type, todo:[]}});
           });
 
         }
@@ -514,30 +399,14 @@ app.service('HandleAPIInteraction', function($location, $rootScope, GenericFunct
 
   };
 
-  this.saveDailyGoal = function(dailyGoal){
-    //update the goal
-    var rawStr = "DailyGoal: ";
-    for(var i=0; i<dailyGoal.list.length;i++){
-      var small = dailyGoal.list[i].task+":::"+dailyGoal.list[i].complete+";;;";
-      rawStr+=small;
-    }
 
-    var today = new Date();
-    today.setHours(0,0,0,0);
-    var event = {
-      'summary': rawStr,
-      'start': {
-        'dateTime': (today).toISOString()
-      },
-      'end': {
-        'dateTime': (today).toISOString()
-      },
-    };
-
-    HandleAPIInteraction.updateEvent(event, dailyGoal.id);
-  };
 
   this.parseGoalsList = function(input, type){
+    var parsedList = JSON.parse(eval("(" + input + ")"));
+    /*
+    var obj2 = { "name":"John", "age":30, "city":"New York"};
+    var myJSON = JSON.stringify(obj2);*/
+    /*
     var eraseStrLen = (type).length;
     var newInput = input.substring(eraseStrLen);
 
@@ -554,7 +423,7 @@ app.service('HandleAPIInteraction', function($location, $rootScope, GenericFunct
         };
         parsedList.push(task);
       }
-    }
+    }*/
 
     return parsedList;
   };
@@ -626,7 +495,31 @@ app.service('HandleToday', function(HandleAPIInteraction){
 
     return promise;
   };
+  this.saveDailyGoal = function(dailyGoal){
+    //update the goal
+    /*
+    var tempStr = "'"+JSON.stringify({type: "DailyGoal", todo:[]})+"'";
+    var myObj = {type: "DailyGoal", todo:[]};
+    //var rawStr = "DailyGoal: ";
+    for(var i=0; i<dailyGoal.list.length;i++){
+      var small = dailyGoal.list[i].task+":::"+dailyGoal.list[i].complete+";;;";
+      rawStr+=small;
+    }*/
 
+    var today = new Date();
+    today.setHours(0,0,0,0);
+    var event = {
+      'summary': "'"+JSON.stringify(dailyGoal.list)+"'",
+      'start': {
+        'dateTime': (today).toISOString()
+      },
+      'end': {
+        'dateTime': (today).toISOString()
+      },
+    };
+
+    HandleAPIInteraction.updateEvent(event, dailyGoal.id);
+  };
 });
 
 

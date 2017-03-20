@@ -34,8 +34,8 @@ app.controller("yearCtrl", function($scope,HandleAPIInteraction, HandleYearGoals
         });
       },
       addYearGoal:function(){
-        if($scope.handleYearGoal.data.yearGoal.list.length<10){
-          $scope.handleYearGoal.data.yearGoal.list.push({
+        if($scope.handleYearGoal.data.yearGoal.list.todo.length<10){
+          $scope.handleYearGoal.data.yearGoal.list.todo.push({
             task: "",
             complete:false
           });
@@ -48,8 +48,8 @@ app.controller("yearCtrl", function($scope,HandleAPIInteraction, HandleYearGoals
         HandleYearGoals.saveGoals("YearGoal");
       },
       addMonthGoals:function(month){
-        if($scope.handleYearGoal.data.months.data[month].list.length<50){
-          $scope.handleYearGoal.data.months.data[month].list.push({
+        if($scope.handleYearGoal.data.months.data[month].list.todo.length<50){
+          $scope.handleYearGoal.data.months.data[month].list.todo.push({
             task: "",
             complete:false
           });

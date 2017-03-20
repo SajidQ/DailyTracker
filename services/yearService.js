@@ -62,7 +62,7 @@ app.service('HandleYearGoals', function(HandleAPIInteraction){
     today.setHours(0,0,0,0);
     var firstday = new Date(today.getFullYear(), month, 1);
 
-    var rawStr = type+": ";
+    //var rawStr = type+": ";
     var listPtr = null;
     if(type==="YearGoal")
     {
@@ -72,15 +72,17 @@ app.service('HandleYearGoals', function(HandleAPIInteraction){
     else{
       listPtr = selfPtr.data.months[month];
     }
+
+    /*
     for(var i=0; i<listPtr.list.length;i++){
       var small = listPtr.list[i].task+":::"+listPtr.list[i].complete+";;;";
       rawStr+=small;
     }
-
+    */
     firstday.setHours(0,0,0,0);
 
     var event = {
-      'summary': rawStr,
+      'summary': "'"+JSON.stringify(listPtr.list)+"'",
       'start': {
         'dateTime': (firstday).toISOString()
       },

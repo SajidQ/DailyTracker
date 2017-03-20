@@ -121,11 +121,11 @@ body{
 }
 
 .month-item{
-    background-color: #F68986;
-    background: -webkit-linear-gradient(left top, #ED3EA3, #F68986, #FEC76C); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(bottom right, #ED3EA3,#F68986, #FEC76C); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(bottom right, #ED3EA3,#F68986, #FEC76C); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(to bottom right, #ED3EA3,#F68986, #FEC76C);
+    background-color: #3b7fbe;
+    background: -webkit-linear-gradient(left top, #399292, #356da2, #544e9c); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(bottom right, #399292, #356da2, #544e9c); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(bottom right, #399292, #356da2, #544e9c); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to bottom right, #399292, #356da2, #544e9c);
     width: 20%;
     min-width: 250px;
     height: 330px;
@@ -135,10 +135,10 @@ body{
 
 .planner-item{
   background-color: #F68986;
-  background: -webkit-linear-gradient(left top, #ED3EA3, #F68986, #FEC76C); /* For Safari 5.1 to 6.0 */
-  background: -o-linear-gradient(bottom right, #ED3EA3,#F68986, #FEC76C); /* For Opera 11.1 to 12.0 */
-  background: -moz-linear-gradient(bottom right, #ED3EA3,#F68986, #FEC76C); /* For Firefox 3.6 to 15 */
-  background: linear-gradient(to bottom right, #ED3EA3,#F68986, #FEC76C);
+  background: -webkit-linear-gradient(left top, #c33b8b, #ca6c79, #cf9e63); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(bottom right, #c33b8b,#ca6c79, #cf9e63); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(bottom right, #c33b8b,#ca6c79, #cf9e63); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to bottom right, #c33b8b,#ca6c79, #cf9e63);
   width: 100%;
   min-width: 300px;
   height: 330px;
@@ -153,11 +153,15 @@ body{
   text-align: center;
   padding-top: 5px;
   border-radius: 10px;
-  color:#9C0E60;
+  color:#3f306d;
   letter-spacing: 1px;
   font-variant: small-caps;
   font-size: 22px;
   font-weight: 600;
+}
+
+.planner-item .item-header{
+  color:#611d45;
 }
 
 .item-body{
@@ -193,7 +197,6 @@ input.textBox{
   background: transparent;
   border: 0px;
   border-bottom: 1px dashed #fec76c;
-  opacity: .7;
   float:left;
   height: 30px;
   margin-left: 5px;
