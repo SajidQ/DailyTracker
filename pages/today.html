@@ -1,7 +1,86 @@
 <div id="signedIn">
   <!--<button type="button" class="btn btn-primary" id="signout-button" style="display: none;">Sign Out</button>-->
-  <pre id="content"></pre>
 
+
+  <div class="today-container">
+    <div class="today-item">
+      <div class="item-header">Today</div>
+      <div class="item-body">
+        <div class="hours">
+          <div  ng-repeat="halfHour in handleHours.data.hours track by $index">
+            <div class="label">{{halfHour.hour+":"+halfHour.min}} {{halfHour.am ? "AM":"PM"}}</div>
+            <input class="hourInput" type="text" value="{{halfHour.task}}" ng-model="halfHour.task" ng-blur="handleHours.functions.addHour(halfHour.id)">
+          </div>
+        </div>
+      </div>
+      <div class="item-footer">
+        <div class="btn-group" style="float:right; ">
+        <a href="javascript:void(0)" ><span class="fa fa-plus-square" aria-hidden="true"  ng-click="handleYearGoal.functions.addYearGoal()"></span></a>
+      </div></div>
+    </div>
+  </div>
+  <div class="planning-container">
+      <div class="month-item">
+        <div class="item-header">Daily Goals</div>
+        <div class="item-body">
+          <div class="input-row" ng-repeat="goal in handleGoals.data.daily.list.todo track by $index" ng-hide="handleYearGoal.data.yearGoal.list.todo.length<1">
+            <div class="checkboxAndInput">
+              <input class="checkbox" type="checkbox" value="" ng-checked="goal.complete===true">
+              <input class="textBox" type="text" value="{{goal.task}}" ng-model="goal.task" ng-blur="handleGoals.functions.saveDailyGoals()">
+            </div>
+            <div class="del">X</div>
+          </div>
+          <div ng-hide="handleGoals.data.daily.list.todo.length>0">
+            No Enteries Found!! Click + to add. :)
+          </div>
+        </div>
+        <div class="item-footer">
+          <div class="btn-group" style="float:right; ">
+          <a href="javascript:void(0)" ><span class="fa fa-plus-square" aria-hidden="true"  ng-click="handleGoals.functions.addNewDailyGoal()"></span></a>
+        </div></div>
+      </div>
+
+      <div class="month-item">
+        <div class="item-header">Monthly Goals</div>
+        <div class="item-body">
+          <div class="input-row" ng-repeat="goal in handleGoals.data.month.list.todo track by $index" ng-hide="handleYearGoal.data.yearGoal.list.todo.length<1">
+            <div class="checkboxAndInput">
+              <input class="checkbox" type="checkbox" value="" ng-checked="goal.complete===true">
+              <input class="textBox" type="text" value="{{goal.task}}" ng-model="goal.task" ng-blur="handleGoals.functions.saveDailyGoals()">
+            </div>
+            <div class="del">X</div>
+          </div>
+          <div ng-hide="handleGoals.data.month.list.todo.length>0">
+            No Enteries Found!! Click + to add. :)
+          </div>
+        </div>
+        <div class="item-footer">
+          <div class="btn-group" style="float:right; ">
+          <a href="javascript:void(0)" ><span class="fa fa-plus-square" aria-hidden="true"  ng-click="handleGoals.functions.addNewDailyGoal()"></span></a>
+        </div></div>
+      </div>
+
+      <div class="month-item">
+        <div class="item-header">Annual Goals</div>
+        <div class="item-body">
+          <div class="input-row" ng-repeat="goal in handleGoals.data.year.list.todo track by $index" ng-hide="handleYearGoal.data.yearGoal.list.todo.length<1">
+            <div class="checkboxAndInput">
+              <input class="checkbox" type="checkbox" value="" ng-checked="goal.complete===true">
+              <input class="textBox" type="text" value="{{goal.task}}" ng-model="goal.task" ng-blur="handleGoals.functions.saveDailyGoals()">
+            </div>
+            <div class="del">X</div>
+          </div>
+          <div ng-hide="handleGoals.data.year.list.todo.length>0">
+            No Enteries Found!! Click + to add. :)
+          </div>
+        </div>
+        <div class="item-footer">
+          <div class="btn-group" style="float:right; ">
+          <a href="javascript:void(0)" ><span class="fa fa-plus-square" aria-hidden="true"  ng-click="handleGoals.functions.addNewDailyGoal()"></span></a>
+        </div></div>
+      </div>
+  </div>
+<!--
   <div class="col-md-4 col-lg-4">
     <div class="panel panel-default" id="today">
       <div class="panel-heading">
@@ -73,5 +152,5 @@
       </div>
     </div>
   </div>
-
+-->
 </div>

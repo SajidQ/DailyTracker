@@ -6,7 +6,7 @@ app.service('GenericFunctions', function(){
   }
 });
 
-app.service('HandleAPIInteraction', function($location, $rootScope, GenericFunctions){
+app.service('HandleAPIInteraction', function($location, $rootScope){
   var selfPtr=null;
   this.data = {
     api:{
@@ -195,7 +195,7 @@ app.service('HandleAPIInteraction', function($location, $rootScope, GenericFunct
 
               //after 6am
               if(hour>=6){
-                var convHour = (hour-6)*2;
+                var convHour = (hour-6);
                 if(min===30)
                 convHour++;
 
@@ -204,7 +204,7 @@ app.service('HandleAPIInteraction', function($location, $rootScope, GenericFunct
                   hoursPtr[convHour].eventID = event.id;
                 }
 
-                GenericFunctions.append(event.summary + ' (' + startDate + ')');
+                //GenericFunctions.append(event.summary + ' (' + startDate + ')');
               }
             }
             else{
@@ -218,9 +218,9 @@ app.service('HandleAPIInteraction', function($location, $rootScope, GenericFunct
           $rootScope.$apply();
 
         }
-        else {
+        /*else {
           GenericFunctions.append('No upcoming events found.');
-        }
+        }*/
 
         //if no daily goal available, create empty item
         if(!foundDailyGoal){
@@ -332,16 +332,17 @@ app.service('HandleAPIInteraction', function($location, $rootScope, GenericFunct
     month = "0"+month;
     if(day<10)
     day = "0"+day;
-    var hour = newItem.hour;
+    var hour = newItem.actualHour;
     var min = newItem.min;
-    var endHour = hour;
+    var endHour = hour+1;
     var zone=today.toString().substring(29,33);
-    var endMin = "30";
+    var endMin = "00";
+    /*
     if(min==="30")
     {
       endMin = "00";
       endHour ++;
-    }
+    }*/
 
     if(hour<10)
     hour = "0"+hour;
@@ -451,6 +452,7 @@ app.service('HandleToday', function(HandleAPIInteraction){
     //loop though 24 hours (x2 because of 30min interval),
     //starting at 6am
     var count =0;
+    /*
     for(var i=12; i<48; i++){
 
       //determine hour + period
@@ -472,6 +474,32 @@ app.service('HandleToday', function(HandleAPIInteraction){
       hours.push({
         id:count,
         hour: Math.floor(hour/2),
+        min: min,
+        am: am,
+        task:"",
+        eventID:null
+      });
+      count++;
+    }*/
+
+    for(var i=6; i<24; i++){
+
+      //determine hour + period
+      var hour = i;
+      if(i>=12)
+      {
+        am= false;
+        if(i!=12)
+        hour=hour-12;
+      }
+
+      //add the minutes
+      min="00";
+
+      hours.push({
+        id:count,
+        actualHour:i,
+        hour: hour,
         min: min,
         am: am,
         task:"",
