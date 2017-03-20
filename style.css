@@ -65,11 +65,11 @@ body{
 
 .hours .label{
   float: left;
-  color: #989898 !important;
+  color: #fff !important;
   min-width: 60px !important;
   width: 10%;
   text-align: right;
-  height: 18px !important;
+  height: 22px !important;
   vertical-align: middle !important;
   padding-top: 7px;
 }
@@ -89,11 +89,13 @@ body{
   padding: 0px !important;
   height: 35px !important;
   font-size:18px !important;
-  border-bottom: 1px solid #dcdcdc !important;
+  border: 1px dashed #dcdcdc !important;
   color: #525252 !important;
   font-family: 'Indie Flower', cursive !important;
   width: 78%;
   min-width: 200px;
+  margin-bottom: 5px;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .hours input:focus{
@@ -108,6 +110,7 @@ body{
  flex-wrap: wrap;
  height: 100%;
  width: 33%;
+ min-width: 310px;
  float: left;
 }
 
@@ -129,14 +132,14 @@ body{
   background: linear-gradient(to bottom right, #c33b8b,#ca6c79, #cf9e63);
   min-width: 300px;
   width: 100%;
-  height: 730px;
+  height: 830px;
   margin: 10px;
   border-radius: 10px;
 }
 
 
 .today-item .item-body{
-  height: 660px;
+  height: 760px;
   background:transparent;
   padding: 10px;
 }

@@ -212,7 +212,7 @@ app.service('HandleAPIInteraction', function($location, $rootScope){
               handleGoals.data.daily.id = event.id;
               //handleGoals.data.daily.raw = event.summary;
               handleGoals.data.daily.list = selfPtr.parseGoalsList(event.summary);
-              GenericFunctions.append(event.summary + ' (' + startDate + ')');
+              //GenericFunctions.append(event.summary + ' (' + startDate + ')');
             }
           }
           $rootScope.$apply();
