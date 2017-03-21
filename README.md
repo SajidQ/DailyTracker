@@ -1,8 +1,8 @@
 # DailyTracker
-##Welcome!
+## Welcome!
 DailyTracker is an online planning dashboard for tracking days by half-hours and managing goals throughout the year using the Google Calendar API.
 
-##To Do List
+## To Do List
 
 <ul>
 <li> <del>Add angular</del> 2/25/17 </li>
@@ -19,16 +19,11 @@ DailyTracker is an online planning dashboard for tracking days by half-hours and
 <li><del>Load and show daily goals in goals section</del> 3/8/17</li>
 <li>Add routing for different pages and organize files</li>
 <li>Add signin permissions to routing </li>
-<li>Add hidden monthly goal event</li>
-<li>Load and show monthly goals in goals section</li>
-<li>Add hidden yearly goal event</li>
-<li>Load and show yearly goals in goals section</li>
-
 </ul>
 
 
 ---
-##Ideas
+## Ideas
 <ul>
 <li>Switch to a start/stop tracker?</li>
 <li>Look in to using Google App Storage for goals and habit tracking</li>
@@ -36,12 +31,12 @@ DailyTracker is an online planning dashboard for tracking days by half-hours and
 <li>Look into connecting with Amazon for purchases? Or youTube watch history?</li>
 <li>Make a plan your month? </li>
 <li>Make a plan your week?</li>
-<li>Plan your year</li>
+<li><del>Plan your year</del> 3/20/17</li>
 </ul>
 
 
 ---
-##Notes
+## Notes
 ### Week of 3/6/17
 3/6/17 - Added to do items related to showing the daily, monthly, and yearly goals.
 
@@ -73,7 +68,7 @@ Tasks to add: get list of calendars, check if DailyTracker calendar is a part of
 
 2/28/17 - Worked on cleaning up and showing the hours. I'm having a hard time imagining the design with goals, the hourly display of today and tomorrow, and the habits. I really want to add things like habit-tracking and maybe connect to Wunderlist. The current index.html page is likely to become a dashboard page with the other header links providing more editing features for lists..?
 
-###Week of 2/20/17
+### Week of 2/20/17
 2/26/17 - Goal: Change what's shown on the screen based on authorization. Start setting up the UI for Today (hourly) and the Goals.
 
 2/25/17 - This is a project to play around with JS, angularjs, but mostly the Google Calendar API. Additionally, I'm planning to use this to maybe track goals outside of journaling using one location, google calendar.
