@@ -14,14 +14,11 @@ DailyTracker is an online planning dashboard for tracking days by half-hours and
 <li><del>Save user's input in list to calendar</del> 3/4/17</li>
 <li><del>Update existing event, do not rewrite</del> 3/5/17</li>
 <li><del>Grab all the tasks from the DailyTracker and show on the hourly today list.</del> 3/5/17</li>
-<li> Grab tasks from other calendars and layer it on top of hourly today list. </li>
-<li> Show on timeline</li>
+<li> Grab tasks from other calendars and layer it on top of hourly today list and  show on timeline</li>
 <li><del>Add hidden Daily goal event</del> 3/7/17</li>
 <li><del>Load and show daily goals in goals section</del> 3/8/17</li>
 <li>Add routing for different pages and organize files</li>
-<li>Add signin permissions to routing </li> 
-<li> Revisit Objective</li>
-<li>Clean up DailyGoal</li>
+<li>Add signin permissions to routing </li>
 <li>Add hidden monthly goal event</li>
 <li>Load and show monthly goals in goals section</li>
 <li>Add hidden yearly goal event</li>

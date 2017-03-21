@@ -25,6 +25,10 @@ app.controller("yearCtrl", function($scope,HandleAPIInteraction, HandleYearGoals
             $scope.$apply();
           });
         }
+        else{
+          $scope.handleYearGoal.data.yearGoal = HandleYearGoals.data.yearGoal;
+          $scope.$apply();
+        }
 
         HandleYearGoals.getAllMonths().then(function(r){
           $scope.handleYearGoal.data.months.data = HandleYearGoals.data.months;

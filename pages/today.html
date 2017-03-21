@@ -46,7 +46,7 @@
           <div class="input-row" ng-repeat="goal in handleGoals.data.month.list.todo track by $index" ng-hide="handleYearGoal.data.yearGoal.list.todo.length<1">
             <div class="checkboxAndInput">
               <input class="checkbox" type="checkbox" value="" ng-checked="goal.complete===true">
-              <input class="textBox" type="text" value="{{goal.task}}" ng-model="goal.task" ng-blur="handleGoals.functions.saveDailyGoals()">
+              <input class="textBox" type="text" value="{{goal.task}}" ng-model="goal.task" ng-blur="handleGoals.functions.saveMonthGoals(null)">
             </div>
             <div class="del">X</div>
           </div>
@@ -56,7 +56,7 @@
         </div>
         <div class="item-footer">
           <div class="btn-group" style="float:right; ">
-          <a href="javascript:void(0)" ><span class="fa fa-plus-square" aria-hidden="true"  ng-click="handleGoals.functions.addNewDailyGoal()"></span></a>
+          <a href="javascript:void(0)" ><span class="fa fa-plus-square" aria-hidden="true"  ng-click="handleGoals.functions.addMonthGoals(null)"></span></a>
         </div></div>
       </div>
 
@@ -66,7 +66,7 @@
           <div class="input-row" ng-repeat="goal in handleGoals.data.year.list.todo track by $index" ng-hide="handleYearGoal.data.yearGoal.list.todo.length<1">
             <div class="checkboxAndInput">
               <input class="checkbox" type="checkbox" value="" ng-checked="goal.complete===true">
-              <input class="textBox" type="text" value="{{goal.task}}" ng-model="goal.task" ng-blur="handleGoals.functions.saveDailyGoals()">
+              <input class="textBox" type="text" value="{{goal.task}}" ng-model="goal.task" ng-blur="handleGoals.functions.saveYearGoals()">
             </div>
             <div class="del">X</div>
           </div>
@@ -76,7 +76,7 @@
         </div>
         <div class="item-footer">
           <div class="btn-group" style="float:right; ">
-          <a href="javascript:void(0)" ><span class="fa fa-plus-square" aria-hidden="true"  ng-click="handleGoals.functions.addNewDailyGoal()"></span></a>
+          <a href="javascript:void(0)" ><span class="fa fa-plus-square" aria-hidden="true"  ng-click="handleGoals.functions.addYearGoal()"></span></a>
         </div></div>
       </div>
   </div>

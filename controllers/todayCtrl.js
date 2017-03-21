@@ -21,7 +21,7 @@ app.controller("todayCtrl", function($scope, HandleAPIInteraction, HandleToday, 
     functions:{
       initializePage:function(){
         HandleAPIInteraction.getToday($scope.handleHours.data.hours, $scope.handleGoals);
-        
+
         $scope.handleGoals.functions.initiateGoals();
         HandleYearGoals.getYearInformation().then(function(r){
           $scope.handleGoals.data.year = HandleYearGoals.data.yearGoal;
@@ -45,17 +45,28 @@ app.controller("todayCtrl", function($scope, HandleAPIInteraction, HandleToday, 
 
     $scope.handleGoals = {
       data:{
-        year:{id:null, list:[]},
-        month:{id:null, list:[]},
+        year:{id:null, list:{}},
+        month:{id:null, list:{}},
         weekly:[],
         daily:{id:null, list:{}}
       },
       functions:{
         initiateGoals:function(){
-          //DailyGoal checked/initiated in HandleAPIInteraction.getToday()
-          //check for monthly goals
         },
-
+        addYearGoal:function(){
+          if($scope.handleGoals.data.year.list.todo.length<10){
+            $scope.handleGoals.data.year.list.todo.push({
+              task: "",
+              complete:false
+            });
+          }
+          else{
+            alert("Only 10 year goals allowed!");
+          }
+        },
+        saveYearGoals:function(){
+          HandleYearGoals.saveGoals("YearGoal");
+        },
         addNewDailyGoal:function(){
           if($scope.handleGoals.data.daily.list.todo.length<21){
             $scope.handleGoals.data.daily.list.todo.push({
@@ -69,6 +80,31 @@ app.controller("todayCtrl", function($scope, HandleAPIInteraction, HandleToday, 
         },
         saveDailyGoals:function(){
           HandleToday.saveDailyGoal($scope.handleGoals.data.daily);
+        },
+        addMonthGoals:function(month){
+          if(month===null)
+          {
+            if($scope.handleGoals.data.month.list.todo.length<50){
+              $scope.handleGoals.data.month.list.todo.push({
+                task: "",
+                complete:false
+              });
+            }
+            else{
+              alert("Only 50 daily goals allowed!");
+            }
+          }
+
+        },
+        saveMonthGoals:function(month){
+          if(month===null)
+          {
+            var date = new Date();
+            month = date.getMonth();
+            HandleYearGoals.data.months[month].id=$scope.handleGoals.data.month.id;
+            HandleYearGoals.data.months[month].list=$scope.handleGoals.data.month.list;
+          }
+          HandleYearGoals.saveGoals("MonthGoal", month);
         }
       }
 

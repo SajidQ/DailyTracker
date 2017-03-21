@@ -1,9 +1,26 @@
 body{
   background-color: #212A34 !important;
+  background: -webkit-radial-gradient(#1B3B6F, #212A34); /* Safari 5.1 to 6.0 */
+ background: -o-radial-gradient(#1B3B6F, #212A34); /* For Opera 11.6 to 12.0 */
+ background: -moz-radial-gradient(#1B3B6F, #212A34); /* For Firefox 3.6 to 15 */
+ background: radial-gradient(#1B3B6F, #212A34);
   color: #fff;
   padding: 0;
   margin: 0;
   font-family: 'Open Sans', sans-serif;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 0px rgba(255,255,255,0.3);
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    -webkit-box-shadow: inset 0 0 6px rgba(255,255,255,0.6);
 }
 
 .jumbotron{
@@ -13,15 +30,15 @@ body{
 .page-wrapper{
   padding: 0;
   margin: 0 auto !important;
-  width:95% !important;
-  max-width: 1400px;
+  width:100% !important;
+  max-width: 1500px;
   height:100% !important;
   min-height: 800px;
 }
 
 #signedIn{
   margin: 0 auto !important;
-  width: 100%;
+  width: 100% !important;
   height: 100% !important;
   max-width: 1500px !important;
 }
@@ -38,17 +55,9 @@ body{
   height:100% !important;
 }
 
-//hours
-#today{
-}
-
-.panel{
-  width: 100% !important;
-  min-width: 300px;
-}
-
-.panel-heading{
-  height: 40px !important;
+.fa-plus-square {
+    text-shadow: 1px 1px 1px #ccc;
+    font-size: 1.5em;
 }
 
 .header-icon{
@@ -67,7 +76,7 @@ body{
   float: left;
   color: #fff !important;
   width: 20%;
-  min-width: 70px !important;
+  min-width: 65px !important;
   text-align: right;
   height: 35px !important;
   vertical-align: middle !important;
@@ -80,11 +89,6 @@ body{
   float: right;
 }
 
-.panel-default > .panel-heading {
-  color: #d7d7d7;
-  background-color: #542344 !important;
-  border-color: #542344;
-}
 
 .hours input{
   border: 0px !important;
@@ -92,7 +96,7 @@ body{
   height: 35px !important;
   font-size:18px !important;
   border: 1px dashed #dcdcdc !important;
-  color: #525252 !important;
+  color: #fff !important;
   font-family: 'Indie Flower', cursive !important;
   width: 78%;
   min-width: 180px;
@@ -111,9 +115,10 @@ body{
  -webkit-flex-wrap: wrap;
  flex-wrap: wrap;
  height: 100%;
- width: 33%;
- min-width: 310px;
+ width: 39%;
+ min-width: 330px;
  float: left;
+ padding: 0px;
 }
 
 .planning-container{
@@ -122,8 +127,10 @@ body{
  -webkit-flex-wrap: wrap;
  flex-wrap: wrap;
  height: 100%;
- width: 66%;
+ width: 60%;
+ min-width: 270px;
  float: right;
+ padding: 0px;
 }
 
 .today-item{
@@ -148,6 +155,7 @@ body{
 
 .planning-container .month-item{
   width: 47%;
+  margin: 10px !important;
 }
 
 /*** YEAR PAGE***/
@@ -159,7 +167,8 @@ body{
     -webkit-align-content: center;
     align-content: center;
  height: 100%;
- margin: auto;
+ width: 80%;
+ margin:auto;
 }
 
 .planner-container{
@@ -182,7 +191,7 @@ body{
     width: 20%;
     min-width: 250px;
     height: 330px;
-    margin: 10px;
+    margin: 10px ;
     border-radius: 10px;
 }
 
@@ -223,6 +232,7 @@ body{
   height: 260px;
   background:transparent;
   padding: 10px;
+  overflow: auto;
 }
 .input-row{
   width: 100%;
