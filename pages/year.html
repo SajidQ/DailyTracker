@@ -23,47 +23,7 @@
     </div>
 
   </div>
-<!--
-<div class="row">
-  <div class="col-md-10 col-lg-10">
-    <div class="panel panel-default" id="yearGoals">
-      <div class="panel-heading">
-        <h3 class="panel-title " style="width:200px; float:left; ">Plans for the year? </h3>
-        <div class="btn-group" style="float:right; ">
-          <a href="javascript:void(0)" ><span class="fa fa-plus-square" aria-hidden="true"  ng-click="handleYearGoal.functions.addYearGoal()"></span></a>
-        </div>
-      </div>
-      <div class="panel-body">
-        <div ng-repeat="goal in handleYearGoal.data.yearGoal.list track by $index">
-          <div class="checkbox">
-            <input type="checkbox" value="" ng-checked="goal.complete==='true'"><input type="text" class="form-control" value="{{goal.task}}" ng-model="goal.task" ng-blur="handleYearGoal.functions.saveYearGoals()">
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-  <div class="row">
 
-    <div class="col-md-2 col-lg-2" ng-repeat="month in handleYearGoal.data.months.count">
-      <div class="panel panel-default" id="month_{{month}}">
-        <div class="panel-heading">
-          <h3 class="panel-title " style="width:200px; float:left; ">{{month}}</h3>
-          <div class="btn-group" style="float:right; ">
-            <a href="javascript:void(0)" ><span class="fa fa-plus-square" aria-hidden="true"  ng-click="handleYearGoal.functions.addMonthGoal(month)"></span></a>
-          </div>
-        </div>
-        <div class="panel-body">
-          <div ng-repeat="goal in handleYearGoal.data.months.data[month].list track by $index">
-            <div class="checkbox">
-              <input type="checkbox" value="" ng-checked="goal.complete==='true'"><input type="text" class="form-control" value="{{goal.task}}" ng-model="goal.task" ng-blur="handleYearGoal.functions.saveMonthGoals(month)">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
--->
   <div class="month-container">
     <div class="month-item" ng-repeat="month in handleYearGoal.data.months.count">
       <div class="item-header">{{handleYearGoal.data.months.data[month].label}}</div>
