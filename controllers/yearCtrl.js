@@ -48,6 +48,10 @@ app.controller("yearCtrl", function($scope,HandleAPIInteraction, HandleYearGoals
           alert("Only 10 year goals allowed!");
         }
       },
+      deleteYearGoal:function(input){
+          $scope.handleYearGoal.data.yearGoal.list.todo.splice(input, 1);
+          $scope.handleYearGoal.functions.saveYearGoals();
+      },
       saveYearGoals:function(){
         HandleYearGoals.saveGoals("YearGoal");
       },
@@ -61,6 +65,10 @@ app.controller("yearCtrl", function($scope,HandleAPIInteraction, HandleYearGoals
         else{
           alert("Only 50 daily goals allowed!");
         }
+      },
+      deleteMonthGoals:function(month, input){
+          $scope.handleYearGoal.data.months.data[month].list.todo.splice(input, 1);
+          $scope.handleYearGoal.functions.saveMonthGoals(month);
       },
       saveMonthGoals:function(month){
         HandleYearGoals.saveGoals("MonthGoal", month);

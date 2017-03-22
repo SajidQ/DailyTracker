@@ -25,10 +25,10 @@
         <div class="item-body">
           <div class="input-row" ng-repeat="goal in handleGoals.data.daily.list.todo track by $index" ng-hide="handleYearGoal.data.yearGoal.list.todo.length<1">
             <div class="checkboxAndInput">
-              <input class="checkbox" type="checkbox" value="" ng-checked="goal.complete===true">
+              <input class="checkbox" type="checkbox" ng-model="handleGoals.data.daily.list.todo[$index].complete" ng-change="handleGoals.functions.saveDailyGoals()" ng-checked="goal.complete===true">
               <input class="textBox" type="text" value="{{goal.task}}" ng-model="goal.task" ng-blur="handleGoals.functions.saveDailyGoals()">
             </div>
-            <div class="del">X</div>
+            <div class="del" ng-click="handleGoals.functions.deleteDailyGoal($index)">X</div>
           </div>
           <div ng-hide="handleGoals.data.daily.list.todo.length>0">
             No Enteries Found!! Click + to add. :)
@@ -45,10 +45,10 @@
         <div class="item-body">
           <div class="input-row" ng-repeat="goal in handleGoals.data.month.list.todo track by $index" ng-hide="handleYearGoal.data.yearGoal.list.todo.length<1">
             <div class="checkboxAndInput">
-              <input class="checkbox" type="checkbox" value="" ng-checked="goal.complete===true">
+              <input class="checkbox" type="checkbox" ng-model="handleGoals.data.month.list.todo[$index].complete" ng-change="handleGoals.functions.saveMonthGoals(null)" ng-checked="goal.complete===true">
               <input class="textBox" type="text" value="{{goal.task}}" ng-model="goal.task" ng-blur="handleGoals.functions.saveMonthGoals(null)">
             </div>
-            <div class="del">X</div>
+            <div class="del" ng-click="handleGoals.functions.deleteMonthGoals($index)">X</div>
           </div>
           <div ng-hide="handleGoals.data.month.list.todo.length>0">
             No Enteries Found!! Click + to add. :)
@@ -65,10 +65,10 @@
         <div class="item-body">
           <div class="input-row" ng-repeat="goal in handleGoals.data.year.list.todo track by $index" ng-hide="handleYearGoal.data.yearGoal.list.todo.length<1">
             <div class="checkboxAndInput">
-              <input class="checkbox" type="checkbox" value="" ng-checked="goal.complete===true">
+              <input class="checkbox" type="checkbox" ng-model="handleGoals.data.year.list.todo[$index].complete" ng-change="handleGoals.functions.saveYearGoals()" ng-checked="goal.complete===true">
               <input class="textBox" type="text" value="{{goal.task}}" ng-model="goal.task" ng-blur="handleGoals.functions.saveYearGoals()">
             </div>
-            <div class="del">X</div>
+            <div class="del" ng-click="handleGoals.functions.deleteYearGoals($index)">X</div>
           </div>
           <div ng-hide="handleGoals.data.year.list.todo.length>0">
             No Enteries Found!! Click + to add. :)

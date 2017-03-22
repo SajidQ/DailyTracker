@@ -7,10 +7,10 @@
       <div class="item-body">
         <div class="input-row" ng-repeat="goal in handleYearGoal.data.yearGoal.list.todo track by $index" ng-hide="handleYearGoal.data.yearGoal.list.todo.length<1">
           <div class="checkboxAndInput">
-            <input class="checkbox" type="checkbox" value="" ng-checked="goal.complete===true">
+            <input class="checkbox" type="checkbox"  ng-model="handleYearGoal.data.yearGoal.list.todo[$index].complete" ng-change="handleYearGoal.functions.saveYearGoals()" ng-checked="goal.complete===true">
             <input class="textBox" type="text" value="{{goal.task}}" ng-model="goal.task" ng-blur="handleYearGoal.functions.saveYearGoals()">
           </div>
-          <div class="del">X</div>
+          <div class="del"><span ng-click="handleYearGoal.functions.deleteYearGoal($index)">X</span></div>
         </div>
         <div ng-hide="handleYearGoal.data.yearGoal.list.todo.length>0">
           No Enteries Found!! Click + to add. :)
@@ -30,9 +30,10 @@
       <div class="item-body">
         <div class="input-row" ng-repeat="goal in handleYearGoal.data.months.data[month].list.todo track by $index"  ng-hide="handleYearGoal.data.months.data[month].list.todo.length<1">
             <div class="checkboxAndInput">
-            <input class="checkbox" type="checkbox" value="" ng-checked="goal.complete===true"><input class="textBox" type="text" value="{{goal.task}}" ng-model="goal.task" ng-blur="handleYearGoal.functions.saveMonthGoals(month)">
+            <input class="checkbox" type="checkbox" ng-model="handleYearGoal.data.months.data[month].list.todo[$index].complete" ng-change="handleYearGoal.functions.saveMonthGoals(month)" ng-checked="goal.complete===true">
+            <input class="textBox" type="text" value="{{goal.task}}" ng-model="goal.task" ng-blur="handleYearGoal.functions.saveMonthGoals(month)">
           </div>
-          <div class="del">X</div>
+          <div class="del"><span ng-click="handleYearGoal.functions.deleteMonthGoals(month, $index)">X</span></div>
         </div>
         <div ng-hide="handleYearGoal.data.months.data[month].list.todo.length>0">
           No Enteries Found!! Click + to add. :)

@@ -64,6 +64,10 @@ app.controller("todayCtrl", function($scope, HandleAPIInteraction, HandleToday, 
             alert("Only 10 year goals allowed!");
           }
         },
+        deleteYearGoals:function(input){
+            $scope.handleGoals.data.year.list.todo.splice(input, 1);
+            $scope.handleGoals.functions.saveYearGoals();
+        },
         saveYearGoals:function(){
           HandleYearGoals.saveGoals("YearGoal");
         },
@@ -77,6 +81,10 @@ app.controller("todayCtrl", function($scope, HandleAPIInteraction, HandleToday, 
           else{
             alert("Only 20 daily goals allowed!");
           }
+        },
+        deleteDailyGoal:function(input){
+            $scope.handleGoals.data.daily.list.todo.splice(input, 1);
+            $scope.handleGoals.functions.saveDailyGoals();
         },
         saveDailyGoals:function(){
           HandleToday.saveDailyGoal($scope.handleGoals.data.daily);
@@ -95,6 +103,10 @@ app.controller("todayCtrl", function($scope, HandleAPIInteraction, HandleToday, 
             }
           }
 
+        },
+        deleteMonthGoals:function(input){
+            $scope.handleGoals.data.month.list.todo.splice(input, 1);
+            $scope.handleGoals.functions.saveMonthGoals(null);
         },
         saveMonthGoals:function(month){
           if(month===null)

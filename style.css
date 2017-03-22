@@ -249,6 +249,7 @@ body{
   height: 30px;
   padding-top: 5px;
   text-align: left;
+  cursor: pointer;
 }
 
 .checkboxAndInput{
