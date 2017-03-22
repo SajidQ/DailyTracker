@@ -26,7 +26,7 @@
           <div class="input-row" ng-repeat="goal in handleGoals.data.daily.list.todo track by $index" ng-hide="handleYearGoal.data.yearGoal.list.todo.length<1">
             <div class="checkboxAndInput">
               <input class="checkbox" type="checkbox" ng-model="handleGoals.data.daily.list.todo[$index].complete" ng-change="handleGoals.functions.saveDailyGoals()" ng-checked="goal.complete===true">
-              <input class="textBox" type="text" value="{{goal.task}}" ng-model="goal.task" ng-blur="handleGoals.functions.saveDailyGoals()" >
+              <input class="textBox" type="text" value="{{goal.task}}" ng-model="goal.task" ng-blur="handleGoals.functions.saveDailyGoals()" ng-enter="handleGoals.functions.addNewDailyGoal();">
             </div>
             <div class="del" ng-click="handleGoals.functions.deleteDailyGoal($index)">X</div>
           </div>

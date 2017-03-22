@@ -6,7 +6,10 @@ app.directive('ngEnter', function () {
                     scope.$eval(attrs.ngEnter);
                 });
 
-      
+
+                var temp = $(this).parent().parent().parent().find('.input-row').last();
+                temp[0].focus();
+
                 event.preventDefault();
             }
         });
