@@ -4,7 +4,7 @@ DailyTracker is an online planning dashboard for tracking days by half-hours and
 
 ### [Link to DailyTracker](http://qandeelsajid.com/projects/DailyTracker "DailyTracker")
 
-![alt text](http://qandeelsajid.com/projects/DailyTracker/images/help1.png "Main page")
+![alt text](https://github.com/SajidQ/DailyTracker/blob/master/images/help1.png "Main page")
 
 
 ## Usage
@@ -50,7 +50,7 @@ The code structure should be self-explanatory. To get started check out index.ht
 ## Notes
 
 ### Week of 3/20/17
-3/26/17 - I'm going to push this project off to the side so I can work on learning some other stuff. I do plan to work on it from time to time so I can add features like a section for planning for tomorrow, another page to plan for the month or maybe week, some habit tracking thing, some sort of mood tracking, and possibly metrics. 
+3/26/17 - I'm going to push this project off to the side so I can work on learning some other stuff. I do plan to work on it from time to time so I can add features like a section for planning for tomorrow, another page to plan for the month or maybe week, some habit tracking thing, some sort of mood tracking, and possibly metrics.
 
 ### Week of 3/6/17
 3/6/17 - Added to do items related to showing the daily, monthly, and yearly goals.
