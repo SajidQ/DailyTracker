@@ -1,4 +1,4 @@
-app.controller("todayCtrl", function($scope, HandleAPIInteraction, HandleToday, HandleGoals, HandleYearGoals){
+app.controller("todayCtrl", function($scope, HandleAPIInteraction, HandleToday, HandleYearGoals){
   angular.element(document).ready(function () {
       $scope.handleHours.functions.initiateHours();
 

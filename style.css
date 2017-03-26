@@ -10,6 +10,16 @@ body{
   font-family: 'Open Sans', sans-serif;
 }
 
+body a{
+  color: #2D3047;
+  font-weight: 700;
+}
+
+body b{
+  color: #2D3047;
+  font-weight: 700;
+}
+
 ::-webkit-scrollbar {
     width: 10px;
 }
@@ -24,7 +34,9 @@ body{
 }
 
 .jumbotron{
-  background-color: #212a34 !important;
+  background-color: #137d89;
+  width: 100% !important;
+
 }
 
 .page-wrapper{
