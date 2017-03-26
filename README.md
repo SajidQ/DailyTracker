@@ -1,6 +1,18 @@
 # DailyTracker
 ## Welcome!
-DailyTracker is an online planning dashboard for tracking days by half-hours and managing goals throughout the year using the Google Calendar API.
+DailyTracker is an online planning dashboard for tracking days by half-hours and managing goals throughout the year using the Google Calendar API. This is a side project I created for personal experience and use.
+
+### [Link to DailyTracker](http://qandeelsajid.com/projects/DailyTracker "DailyTracker")
+
+![alt text](http://qandeelsajid.com/projects/DailyTracker/images/help1.png "Main page")
+
+
+## Usage
+### Using the dashboard
+To use the dashboard you can click on the above link which will take you to the version that is hosted on my website. Additionally, you can fork the code and host it locally yourself. To do this you need to remove the line "<base href='http://qandeelsajid.com/projects/DailyTracker/'>" from index.html, create an account with Google Calendar API, and replace the value of the variable 'CLIENT_ID' in the HandleAPIInteraction service with your own api id.  
+
+### Using the code
+The code structure should be self-explanatory. To get started check out index.html and script.js. Each page has it's own controller (in the controllers/ folder).
 
 ## To Do List
 
@@ -17,7 +29,6 @@ DailyTracker is an online planning dashboard for tracking days by half-hours and
 <li> Grab tasks from other calendars and layer it on top of hourly today list and  show on timeline</li>
 <li><del>Add hidden Daily goal event</del> 3/7/17</li>
 <li><del>Load and show daily goals in goals section</del> 3/8/17</li>
-<li>Add routing for different pages and organize files</li>
 <li>Add signin permissions to routing </li>
 </ul>
 
@@ -37,6 +48,10 @@ DailyTracker is an online planning dashboard for tracking days by half-hours and
 
 ---
 ## Notes
+
+### Week of 3/20/17
+3/26/17 - I'm going to push this
+
 ### Week of 3/6/17
 3/6/17 - Added to do items related to showing the daily, monthly, and yearly goals.
 

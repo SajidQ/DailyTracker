@@ -234,7 +234,7 @@ app.service('HandleAPIInteraction', function($location, $rootScope){
           };
 
           handleGoals.data.daily.id = selfPtr.createNewEvent(event);
-          handleGoals.data.daily.list = {type:type, todo:[]};
+          handleGoals.data.daily.list = {type: "DailyGoal", todo:[]};
         }
       });
 

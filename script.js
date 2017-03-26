@@ -1,14 +1,16 @@
 var app = angular.module('DailyTracker', ['ngRoute']);
-
+app.config(['$locationProvider', function($locationProvider) {
+  $locationProvider.hashPrefix('');
+}]);
 app.config(function($routeProvider) {
        $routeProvider
            // route for the home page
            .when('/', {
-               templateUrl : '/pages/signin.html',
+               templateUrl : 'pages/signin.html',
                controller  : 'introCtrl'
            })
            .when('/today', {
-               templateUrl : '/pages/today.html',
+               templateUrl : 'pages/today.html',
                controller  : 'todayCtrl'
            })
 
@@ -20,9 +22,13 @@ app.config(function($routeProvider) {
 
            // route for the contact page
            .when('/year', {
-               templateUrl : '/pages/year.html',
+               templateUrl : 'pages/year.html',
                controller  : 'yearCtrl'
-           });
+           })
+           .otherwise({
+             templateUrl : 'pages/signin.html',
+             controller  : 'introCtrl'
+          });
    });
 
 
